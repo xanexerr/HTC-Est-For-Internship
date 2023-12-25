@@ -1,3 +1,6 @@
+<?php
+include 'header.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,21 +9,73 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ระบบรวบรวมสถานประกอบการ แผนกเทคโนโลยีสารสนเทศ</title>
-    <link rel="icon" href="img/logo_ithtc.png" type="image/x-icon">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="css/custom.css" rel="stylesheet">
-    <!-- script -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
 </head>
 
 <body>
-    <h1>Hello Wolrd</h1>
+    <div class="container   shadow-sm p-0">
+        <?php
+        include 'navbar.php';
+        ?>
+        <?php
+        require('connection.php');
+        $sql = "SELECT COUNT(*) FROM workplaces";
+        $stmt = $conn->query($sql);
+        $totalWorkplaces = $stmt->fetchColumn();
+        $workplacesData = $conn->query("SELECT * FROM workplaces")->fetchAll(PDO::FETCH_ASSOC);
+        ?>
+        <!-- conternt tabel -->
+        <table class="container table table-hover">
+            <thead>
+                <tr class="text-center ">
+                    <th class="py-2">ชื่อสถานประกอบการ</th>
+                    <th>ประเภทงาน</th>
+                    <th>ลักษณะงาน</th>
+                    <th>คะแนนรีวิว</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($workplacesData as $row): ?>
+                    <tr class="text-left ">
+                        <td>
+                            <?php echo $row['workplace_name']; ?>
+                        </td>
+                        <td>
+                            <?php echo $row['work_type']; ?>
+                        </td>
+                        <td>
+                            <?php echo $row['description']; ?>
+                        </td>
+                        <td class="text-center">
+                            <?php $rating = $row['rating'];
+                            if (is_numeric($rating)) {
+                                echo str_repeat("⭐", $rating);
+                            }
+                            ?>
+                        </td>
+                        <td class="text-center">
+                            <div class="btn-group ">
+                                <a class="btn btn-primary " href="wp-detail.php?id=<?php echo $row['workplace_id']; ?>">
+                                    รายละเอียด
+                                </a>
+
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- Modal -->
+                    <div class="modal fade" id="my-modal<?php echo $row['workplace_id']; ?>" tabindex="-1"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <!-- Modal Content -->
+                    </div>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- footer -->
+    <?php
+    include 'script.php';
+    ?>
 </body>
 
 </html>
