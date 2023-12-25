@@ -4,11 +4,11 @@ function displayLoggedInHeader($nowuser_fname, $nowuser_lname, $role, $nowwp_id)
 {
     // Navbar
     echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark">';
-    echo '<a class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">';
+    echo '<a class="navbar-toggler mx-3" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">';
     echo '<span class="navbar-toggler-icon"></span>';
     echo '</a>';
     echo '<div class="collapse navbar-collapse" id="navbarNav">';
-    echo '<ul class="navbar-nav mr-auto">'; // Use ml-auto to move items to the right
+    echo '<ul class="navbar-nav mx-auto">'; // Use ml-auto to move items to the right
     echo '<li class="nav-item">';
     echo '<a class="nav-link btn btn-dark text-warning px-3 disabled" href="index.php">หน้าแรก</a>';
     echo '</li>';
@@ -49,18 +49,16 @@ function displayLoggedInHeader($nowuser_fname, $nowuser_lname, $role, $nowwp_id)
     echo '</ul>';
     echo '</div>';
     echo '</nav>';
-    echo '</div>';
-    echo '</nav>';
-    echo '</div>';
+
 }
 function displayLoggedOutHeader()
 {
     echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark">';
-    echo '<a class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">';
+    echo '<a class=" navbar-toggler mx-3" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">';
     echo '<span class="navbar-toggler-icon"></span>';
     echo '</a>';
     echo '<div class="collapse navbar-collapse" id="navbarNav">';
-    echo '<ul class="navbar-nav mr-auto">'; // Use ml-auto to move items to the right
+    echo '<ul class="navbar-nav mx-auto">'; // Use ml-auto to move items to the right
     echo '<li class="nav-item">';
     echo '<a class="nav-link btn btn-dark text-warning px-3 disabled" href="index.php">หน้าแรก</a>';
     echo '</li>';
@@ -76,13 +74,7 @@ function displayLoggedOutHeader()
     echo '</ul>';
     echo '</div>';
     echo '</nav>';
-    echo '</div>';
-    echo '</nav>';
-    echo '</div>';
-    // Navbar for logged out users
-    echo '</ul>';
-    echo '</nav>';
-    echo '</div>';
+
 }
 if (isset($_SESSION["user_id"])) {
     $user_id = $_SESSION["user_id"];
