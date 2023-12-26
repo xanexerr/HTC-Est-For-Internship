@@ -43,7 +43,7 @@ include "navbar.php";
                     $resultAvgRating = $stmtAvgRating->get_result();
 
 
-                    $queryComments = "SELECT comment_text FROM comments WHERE workplace_id = ?";
+                    $queryComments = "SELECT comment_text FROM comments WHERE workplace_id = ? AND `show` = '1'";
                     $stmtComments = $connection->prepare($queryComments);
 
                     if ($stmtComments) {

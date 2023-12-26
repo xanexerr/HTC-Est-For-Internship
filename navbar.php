@@ -11,7 +11,7 @@ function displayLoggedInHeader($nowuser_fname, $nowuser_lname, $role, $nowwp_id)
     echo '<div class="collapse navbar-collapse" id="navbarNav">';
     echo '<ul class="navbar-nav mr-auto">'; // Use ml-auto to move items to the right
     echo '<li class="nav-item">';
-    echo '<a class="nav-link btn btn-dark text-warning px-3 disabled" href="index.php">หน้าแรก</a>';
+    echo '<a class="nav-link btn btn-dark  text-white px-3 " href="index.php">หน้าแรก</a>';
     echo '</li>';
     if ($_SESSION['role'] == "admin") {
         echo '<div class="">
@@ -65,7 +65,7 @@ function displayLoggedOutHeader()
     echo '<div class="collapse navbar-collapse" id="navbarNav">';
     echo '<ul class="navbar-nav mx-auto">'; // Use ml-auto to move items to the right
     echo '<li class="nav-item">';
-    echo '<a class="nav-link btn btn-dark text-warning px-3 disabled" href="index.php">หน้าแรก</a>';
+    echo '<a class="nav-link btn btn-dark  text-white px-3 " href="index.php">หน้าแรก</a>';
     echo '</li>';
 
     echo '<li class="">

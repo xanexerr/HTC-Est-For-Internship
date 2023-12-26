@@ -8,7 +8,7 @@ include 'navbar.php';
 <html lang="en">
 
 <body>
-    <div class="container  shadow-sm p-0">
+    <div class="container  shadow-sm p-0 mt-2 border">
         <div class="bg-body " style="min-height:100dvh;">
             <?php
 
@@ -54,7 +54,7 @@ include 'navbar.php';
 
             } else {
                 // If no search query, retrieve all workplaces
-                $stmt = $conn->prepare("SELECT COUNT(*) FROM workplaces");
+                $stmt = $conn->prepare("SELECT COUNT(*) FROM workplaces ");
                 $stmt->execute();
                 $totalRows = $stmt->fetchColumn();
 
@@ -65,7 +65,7 @@ include 'navbar.php';
                 $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
                 $offset = ($currentPage - 1) * $limit;
 
-                $stmt = $conn->prepare("SELECT * FROM workplaces LIMIT :limit OFFSET :offset");
+                $stmt = $conn->prepare("SELECT * FROM workplaces WHERE `show` = '1' LIMIT :limit OFFSET :offset");
                 $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
                 $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
                 $stmt->execute();
@@ -118,7 +118,7 @@ include 'navbar.php';
                         <th class="py-2 ">ชื่อสถานประกอบการ</th>
                         <th class="py-2 ">ประเภทงาน</th>
                         <th class="py-2 ">ลักษณะงาน</th>
-                        <th class="py-2 ">คะแนนรีวิว</th>
+                        <th class="py-2 text-center ">คะแนนรีวิว</th>
                         <th class="py-2 "></th>
                     </tr>
                 </thead>
