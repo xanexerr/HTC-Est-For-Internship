@@ -9,40 +9,43 @@ function displayLoggedInHeader($nowuser_fname, $nowuser_lname, $role, $nowwp_id)
     echo '<span class="navbar-toggler-icon"></span>';
     echo '</a>';
     echo '<div class="collapse navbar-collapse" id="navbarNav">';
-    echo '<ul class="navbar-nav mr-auto">'; // Use ml-auto to move items to the right
+    echo '<ul class="navbar-nav mx-auto">';
     echo '<li class="nav-item">';
-    echo '<a class="nav-link btn btn-dark  text-white px-3 " href="index.php">หน้าแรก</a>';
+    echo '<a class="nav-link btn btn-primary  text-white px-3 " href="index.php">หน้าแรก</a>';
     echo '</li>';
     if ($_SESSION['role'] == "admin") {
         echo '<div class="">
-            <a href="#" class="nav-link btn btn-dark text-white px-3">ระบบจัดการบัญชีผู้ใข้</a>
+            <a href="#" class="nav-link btn btn-primary text-white px-3">ระบบจัดการบัญชีผู้ใข้</a>
             </div>';
         echo '<div class="">
-            <a href="admin-wp.php" class="nav-link btn btn-none text-white px-3">ระบบจัดสถานประกอบการ</a>
+            <a href="#" class="nav-link btn btn-primary text-white px-3">ระบบจัดการความคิดเห็น</a>
+            </div>';
+        echo '<div class="">
+            <a href="admin-wp.php" class="nav-link btn btn-primary text-white px-3">ระบบจัดสถานประกอบการ</a>
             </div>';
     }
 
     if ($_SESSION['role'] == "teacher") {
         echo '<div class="">
-            <a href="#" class="nav-link btn btn-none text-white px-3">เพิ่มสถานประกอบการ</a>
+            <a href="#" class="nav-link btn btn-primary text-white px-3">เพิ่มสถานประกอบการ</a>
             </div>';
     }
 
     if ($_SESSION['role'] == "student") {
         echo '<li class="">';
         if ($nowwp_id !== null) {
-            echo '<a href="std-wp-edit.php" class="nav-link btn btn-none text-white  px-3">แก้ข้อมูลสถานประกอบการ</a>';
+            echo '<a href="std-wp-edit.php" class="nav-link btn btn-primary text-white  px-3">แก้ข้อมูลสถานประกอบการ</a>';
         } else {
-            echo '<a href="std-wp-edit.php" class="nav-link btn btn-none text-white  px-3">เพิ่มข้อมูลสถานประกอบการ</a>';
+            echo '<a href="std-wp-edit.php" class="nav-link btn btn-primary text-white  px-3">เพิ่มข้อมูลสถานประกอบการ</a>';
         }
         echo '</li>';
     }
 
     echo '<li class="nav-item">';
-    echo '<a class="nav-link btn btn-none text-white  px-3" href="profile.php">ข้อมูลส่วนตัว</a>';
+    echo '<a class="nav-link btn btn-primary text-white  px-3" href="profile.php">ข้อมูลส่วนตัว</a>';
     echo '</li>';
     echo '<li class="">
-        <a href="about.php" class=" nav-link btn btn-none text-white  px-3">ติดต่อแอดมิน</a>
+        <a href="about.php" class=" nav-link btn btn-primary text-white  px-3">ติดต่อแอดมิน</a>
         </li>';
     echo '<li class="nav-item">';
     echo '<a class="nav-link btn btn-danger text-white px-3" href="logout.php">ออกจากระบบ</a>';
@@ -63,13 +66,13 @@ function displayLoggedOutHeader()
     echo '<span class="navbar-toggler-icon"></span>';
     echo '</a>';
     echo '<div class="collapse navbar-collapse" id="navbarNav">';
-    echo '<ul class="navbar-nav mx-auto">'; // Use ml-auto to move items to the right
+    echo '<ul class="navbar-nav mx-auto">';
     echo '<li class="nav-item">';
-    echo '<a class="nav-link btn btn-dark  text-white px-3 " href="index.php">หน้าแรก</a>';
+    echo '<a class="nav-link btn btn-primary text-white px-3 " href="index.php">หน้าแรก</a>';
     echo '</li>';
 
     echo '<li class="">
-        <a href="about.php" class=" nav-link btn btn-none text-white  px-3">ติดต่อแอดมิน</a>
+        <a href="about.php" class=" nav-link btn btn-primary text-white  px-3">ติดต่อแอดมิน</a>
         </li>';
 
     echo '<li class="">

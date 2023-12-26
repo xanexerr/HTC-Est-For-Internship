@@ -8,24 +8,23 @@ include 'navbar.php';
 <html lang="en">
 
 <body>
-    <div class="container  shadow-sm p-0 mt-2 border">
-        <div class="bg-body " style="min-height:100dvh;">
+    <div class="container rounded-top rounded-bottom shadow-sm p-0 my-3 border ">
+        <div class="bg-body rounded-bottom">
             <?php
 
             $limit = 12;
 
             if (isset($_GET['search_query'])) {
-                // Get search query
                 $search_query = $_GET['search_query'];
                 $work_type_filter = ($_GET['work_type_filter']);
-                // Check if a work type filter is set
+
                 if (isset($_GET['work_type_filter']) && !empty($_GET['work_type_filter'])) {
                     $work_type_filter = $_GET['work_type_filter'];
                     $query = "SELECT * FROM workplaces WHERE workplace_name LIKE ? AND work_type = ?";
                     $stmt = $conn->prepare($query);
                     $stmt->execute(["%$search_query%", $work_type_filter]);
                 } else {
-                    // No work type filter, retrieve all workplaces
+                    // ถ้าไม่มีฟิลเตอร์แสดงท้งหมด
                     $stmt = $conn->prepare("SELECT * FROM workplaces WHERE workplace_name LIKE ?");
                     $stmt->execute(["%$search_query%"]);
                 }
@@ -33,24 +32,17 @@ include 'navbar.php';
                 $workplacesData = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 $totalRows = $stmt->rowCount();
 
-                // Redirect if search query is empty
+                //ถ้าค้นหาไม่เจอ แจ้งเตือนและกลับหน้าแรก
                 if ($search_query == '' && $work_type_filter == '') {
                     echo '<script>window.location.href = "index.php";</script>';
                     exit();
                 }
 
-                // Pagination logic (assuming $limit, $currentPage, and $offset are defined)
+                //แบ่งหน้า
                 $totalPages = ceil($totalRows / $limit);
                 $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
                 $offset = ($currentPage - 1) * $limit;
 
-                // Display message if no workplaces are found
-                if (empty($workplacesData)) {
-                    echo '<script>';
-                    echo 'alert("ไม่พบสถานประกอบการ!!");';
-                    echo 'window.location.href = "index.php";';
-                    echo '</script>';
-                }
 
             } else {
                 // If no search query, retrieve all workplaces
@@ -75,11 +67,15 @@ include 'navbar.php';
 
 
             <!-- conternt tabel -->
-            <form class="m-0" method="GET">
+            <form class="m-0 rounded-top" method="GET">
 
-                <div class="input-group container bg-secondary p-3 ">
+                <div class="input-group container rounded-top bg-secondary p-3 ">
                     <input type="text" class="form-control rounded px-3" placeholder="ค้นหาสถานประกอบการ...."
-                        name="search_query">
+                        name="search_query" value="<?php if (isset($search_query)) {
+                            echo $search_query;
+                        }
+                        ?>">
+
 
                     <button class="btn btn-primary rounded px-3 mx-2" type="submit" style="font-size: 1em;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
@@ -90,21 +86,23 @@ include 'navbar.php';
                     </button>
 
 
-
                     <div class="col-xs-2 ">
-                        <select class="form-control rounded text-center text-primary" name="work_type_filter"
-                            onchange="this.form.submit()">
-                            <option value="">ทั้งหมด</option>
+                        <select class="form-control" name="work_type_filter" onchange="this.form.submit()">
+                            <option value="">ประเภทงานทั้งหมด</option>
                             <option value="เขียนโปรแกรม" <?php if (isset($_GET['work_type_filter']) && $_GET['work_type_filter'] === 'เขียนโปรแกรม')
-                                echo 'selected'; ?>>เขียนโปรแกรม</option>
+                                echo 'selected'; ?>>ประเภทงานเขียนโปรแกรม
+                            </option>
                             <option value="ทำกราฟิก" <?php if (isset($_GET['work_type_filter']) && $_GET['work_type_filter'] === 'ทำกราฟิก')
-                                echo 'selected'; ?>>ทำกราฟิก</option>
+                                echo 'selected'; ?>>ประเภทงานทำกราฟิก</option>
                             <option value="ระบบเครือข่าย" <?php if (isset($_GET['work_type_filter']) && $_GET['work_type_filter'] === 'ระบบเครือข่าย')
-                                echo 'selected'; ?>>ระบบเครือข่าย</option>
+                                echo 'selected'; ?>>ประเภทงานระบบเครือข่าย
+                            </option>
                             <option value="ทำเว็บไซต์" <?php if (isset($_GET['work_type_filter']) && $_GET['work_type_filter'] === 'ทำเว็บไซต์')
-                                echo 'selected'; ?>>ทำเว็บไซต์</option>
+                                echo 'selected'; ?>>ประเภทงานทำเว็บไซต์
+                            </option>
                             <option value="ด้านบริการ" <?php if (isset($_GET['work_type_filter']) && $_GET['work_type_filter'] === 'ด้านบริการ')
-                                echo 'selected'; ?>>ด้านบริการ</option>
+                                echo 'selected'; ?>>ประเภทงานด้านบริการ
+                            </option>
                         </select>
 
                     </div>
@@ -112,17 +110,24 @@ include 'navbar.php';
 
 
             </form>
-            <table class="container table table-hover">
+
+            <table class="container table table-hover mb-0  ">
                 <thead class="thead-dark">
                     <tr class="">
-                        <th class="py-2 ">ชื่อสถานประกอบการ</th>
-                        <th class="py-2 ">ประเภทงาน</th>
-                        <th class="py-2 ">ลักษณะงาน</th>
-                        <th class="py-2 text-center ">คะแนนรีวิว</th>
-                        <th class="py-2 "></th>
+                        <th class="py-2 table-secondary ">ชื่อสถานประกอบการ</th>
+                        <th class="py-2 table-secondary">ประเภทงาน</th>
+                        <th class="py-2 table-secondary">ลักษณะงาน</th>
+                        <th class="py-2 table-secondary text-center">คะแนนรีวิว</th>
+                        <th class="py-2 table-secondary"></th>
                     </tr>
                 </thead>
                 <tbody>
+                    <?php
+                    if (empty($workplacesData)) {
+                        echo '<tr ">
+                        <td colspan="6" class="bg-danger text-white " >ไม่พบสถานประกอบการ!</td> </tr>';
+                    }
+                    ?>
                     <?php foreach ($workplacesData as $row): ?>
                         <tr class="text-left ">
                             <td>
@@ -157,40 +162,44 @@ include 'navbar.php';
                         </div>
                     <?php endforeach; ?>
                 </tbody>
+
+
             </table>
+            <div class="container my-3 ">
+                <nav aria-label=" Page navigation example">
+                    <ul class="pagination justify-content-center m-0">
+                        <?php if ($currentPage > 1): ?>
+                            <li class="page-item">
+                                <a class="page-link bg-dark text-white" href="?page=<?php echo ($currentPage - 1); ?>"
+                                    aria-label="Previous">
+                                    <span aria-hidden="true">
+                                        &#60;
+                                    </span>
+                                </a>
+                            </li>
+                        <?php endif; ?>
+
+                        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                            <li class="page-item <?php echo ($i == $currentPage) ? 'active' : ''; ?>">
+                                <a class="page-link  " href="?page=<?php echo $i; ?>">
+                                    <?php echo $i; ?>
+                                </a>
+                            </li>
+                        <?php endfor; ?>
+
+                        <?php if ($currentPage < $totalPages): ?>
+                            <li class="page-item">
+                                <a class="page-link bg-dark text-white" href="?page=<?php echo ($currentPage + 1); ?>"
+                                    aria-label="Next">
+                                    <span aria-hidden="true"> &#62;</span>
+                                </a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </nav>
+            </div>
         </div>
-    </div>
-    <div class="container">
-        <nav aria-label="Page navigation example">
-            <ul class="my-2 pagination justify-content-center">
 
-                <?php if ($currentPage > 1): ?>
-                    <li class="page-item">
-                        <a class="page-link" href="?page=<?php echo ($currentPage - 1); ?>" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                <?php endif; ?>
-
-                <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                    <li class="page-item <?php echo ($i == $currentPage) ? 'active' : ''; ?>">
-                        <a class="page-link" href="?page=<?php echo $i; ?>">
-                            <?php echo $i; ?>
-                        </a>
-                    </li>
-                <?php endfor; ?>
-
-                <?php if ($currentPage < $totalPages): ?>
-                    <li class="page-item">
-                        <a class="page-link" href="?page=<?php echo ($currentPage + 1); ?>" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                <?php endif; ?>
-            </ul>
-        </nav>
-    </div>
-    </div>
     </div>
     <!-- footer -->
     <?php

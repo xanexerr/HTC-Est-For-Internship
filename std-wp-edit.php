@@ -20,122 +20,9 @@
 <body>
     <!-- top banner  -->
     <?php
-    // import 
-    session_start();
-    require 'connection.php';
-
-    function displayLoggedInHeader($nowuser_fname, $nowuser_lname, $role, $nowwp_id)
-    {
-
-        // Banner
-        echo '<div class="bg-primary">';
-        echo '<div class="d-flex flex-wrap justify-content-center py-3  mx-5 border-bottom text-white bg-primary px-3">';
-        echo '<a  class="d-flex align-items-center  mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-        <span  class="fs-4 text-white m-1 text-shadow">สถานประกอบการฝึกประสบการวิชาชีพ</span></a>';
-        echo '<div class="rounded d-flex align-items-center mb-md-0 mx-1 link-body-emphasis text-decoration-none">';
-        echo "<span class='fs-5 px-3 text-white  '>$nowuser_fname $nowuser_lname</span>";
-        echo '</div>';
-        echo '</div>';
-        echo '</div>';
-
-        // Navbar
-        echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-5">';
-        echo '<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">';
-        echo '<span class="navbar-toggler-icon"></span>';
-        echo '</button>';
-        echo '<div class="collapse navbar-collapse" id="navbarNav">';
-        echo '<ul class="navbar-nav mr-auto">'; // Use ml-auto to move items to the right
-        echo '<li class="nav-item">';
-        echo '<a class="nav-link btn  btn-none text-white" href="index.php">หน้าแรก</a>';
-        echo '</li>';
-        if ($_SESSION['role'] == "admin") {
-            echo '<div class="">
-            <a href="#" class="nav-link btn  btn-none text-white px-3">ระบบแอดมิน</a>
-          </div>';
-        }
-
-        if ($_SESSION['role'] == "teacher") {
-            echo '<div class="">
-            <a href="#" class="nav-link btn btn-none text-white text-white px-3">ระบบอาจารย์</a>
-          </div>';
-        }
-
-        if ($_SESSION['role'] == "student") {
-            echo '<li class="">';
-            if ($nowwp_id !== null) {
-                echo '<a href="std-wp-edit.php" class="nav-link btn btn-dark text-warning disabled  px-3">แก้ข้อมูลสถานประกอบการ</a>';
-            } else {
-                echo '<a href="std-wp-edit.php" class="nav-link btn btn-dark text-warning disabled  px-3">เพิ่มข้อมูลสถานประกอบการ</a>';
-            }
-            echo '</li>';
-        }
-
-        echo '<li class="nav-item">';
-        echo '<a class="nav-link btn btn-none text-white  px-3" href="profile.php">ข้อมูลส่วนตัว</a>';
-        echo '</li>';
-        echo '<li class="nav-item">';
-        echo '<a class="nav-link btn btn-danger text-white px-3" href="logout.php">ออกจากระบบ</a>';
-        echo '</li>';
-        echo '</ul>';
-        echo '</div>';
-        echo '</nav>';
-        echo '</div>';
-        echo '</nav>';
-        echo '</div>';
-    }
-
-    function displayLoggedOutHeader()
-    {
-        echo '<div class="bg-primary">';
-        // Banner for logged out users
-        echo '<div class="bg-primary">';
-        echo '<div class="d-flex flex-wrap justify-content-center py-3  mx-5 border-bottom text-white bg-primary px-3">';
-        echo '<a  class="d-flex align-items-center  mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-        <span  class="fs-4 text-white m-1 text-shadow">สถานประกอบการฝึกประสบการวิชาชีพ</span></a>';
-        echo '<div class="rounded d-flex align-items-center mb-md-0 mx-1 link-body-emphasis text-decoration-none">';
-        echo '</div>';
-        echo '</div>';
-        echo '</div>';
-
-        // Navbar for logged out users
-        echo '<nav class="bg-dark d-flex py-2 justify-content-end mb-4 px-5">';
-        echo '<div class="">
-        <a href="index.php" class="p-2 px-3 btn btn-dark mx-1">หน้าแรก</a>
-        </div>';
-
-        echo '<div class="">
-        <a href="login.php" class="p-2 px-3 btn btn-dark mx-1">เข้าสู่ระบบ</a>
-        </div>';
-
-        echo '<div class="">
-        <a href="about.php" class="p-2 px-3 btn btn-dark mx-1">ติดต่อแอดมิน</a>
-        </div>';
-        echo '</nav>';
-        echo '</div>';
-    }
-
-    if (isset($_SESSION["user_id"])) {
-        $user_id = $_SESSION["user_id"];
-        // Fetch the user's information
-        $get_user_info = "SELECT user_id, user_fname, user_lname, workplace_id, role FROM users WHERE user_id = ?";
-        $stmt_usercomment = $connection->prepare($get_user_info);
-        $stmt_usercomment->bind_param("s", $user_id);
-        $stmt_usercomment->execute();
-        $stmt_usercomment->bind_result($nowuser_id, $nowuser_fname, $nowuser_lname, $nowwp_id, $role);
-        $stmt_usercomment->fetch();
-        $stmt_usercomment->close();
-
-        $_SESSION["nowuser_fname"] = $nowuser_fname;
-        $_SESSION["nowuser_lname"] = $nowuser_lname;
-
-        displayLoggedInHeader($nowuser_fname, $nowuser_lname, $role, $nowwp_id);
-    } else {
-        displayLoggedOutHeader();
-    }
+    include 'header.php';
+    include 'navbar.php';
     ?>
-
-
-
     <!-- content -->
 
     <div class="container d-flex justify-content-center align-items-center p-3 my-4 min-vh-100">
@@ -295,24 +182,6 @@
                 } else {
                     echo "No workplace found for this user.";
                 }
-
-                // <label for="workplace_name" class="form-label">ชื่อสถานประกอบการ</label>
-                //     <input type="text" disabled class="form-control" name="workplace_name" value="' . $row["workplace_name"] . '" required>
-        
-                //     <label for="workplace_name" class="form-label mt-1">ประเภทงาน</label>
-                //     <input type="text" disabled class="form-control" name="work_type" value="' . $row["work_type"] . '" required>
-        
-                //     <label for="workplace_name" class="form-label mt-1">ลักษณะงาน</label>
-                //     <input type="text" disabled class="form-control" name="description" value="' . $row["description"] . '" required>
-        
-                //     <label for="workplace_name" class="form-label mt-1">เบอร์โทรติดต่อ</label>
-                //     <input type="text" disabled class="form-control" name="work_tel" value="' . $row["work_tel"] . '" required>
-        
-                //     <label for="workplace_name" class="form-label mt-1">ที่อยู่บริษัท</label>
-                //     <textarea disabled class="form-control" name="workplace_address" rows="5" required>' . $row["workplace_address"] . '</textarea>
-        
-                //     <button type="submit" value="submit" class="mt-3 btn btn-success w-100">บันทึกการเปลี่ยนแปลง</button>
-                //     <a href="index.php" class="mt-1 btn btn-danger w-100">ยกเลิก</a>
                 echo '</form>';
 
             }
@@ -338,18 +207,11 @@
         echo '</nav>';
     }
     ?>
-    <div class="d-flex flex-row bg-primary justify-content-center">
-        <footer class=" py-2  mx-5  border-bottom text-white bg-primary px-3">
-            <p class='fs-5 text-white m-1 text-shadow '>&copy; วิทยาลัยเทคนิคหาดใหญ่</p>
-        </footer>
-    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-        crossorigin="anonymous"></script>
+    <?php
+    include 'script.php';
+    ?>
+
 </body>
 
 </html>
