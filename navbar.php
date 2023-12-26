@@ -4,11 +4,12 @@ function displayLoggedInHeader($nowuser_fname, $nowuser_lname, $role, $nowwp_id)
 {
     // Navbar
     echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark">';
+    echo '<div class="container">';
     echo '<a class="navbar-toggler mx-3" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">';
     echo '<span class="navbar-toggler-icon"></span>';
     echo '</a>';
     echo '<div class="collapse navbar-collapse" id="navbarNav">';
-    echo '<ul class="navbar-nav mx-auto">'; // Use ml-auto to move items to the right
+    echo '<ul class="navbar-nav mr-auto">'; // Use ml-auto to move items to the right
     echo '<li class="nav-item">';
     echo '<a class="nav-link btn btn-dark text-warning px-3 disabled" href="index.php">หน้าแรก</a>';
     echo '</li>';
@@ -46,7 +47,11 @@ function displayLoggedInHeader($nowuser_fname, $nowuser_lname, $role, $nowwp_id)
     echo '<li class="nav-item">';
     echo '<a class="nav-link btn btn-danger text-white px-3" href="logout.php">ออกจากระบบ</a>';
     echo '</li>';
+
+
+
     echo '</ul>';
+    echo '</div>';
     echo '</div>';
     echo '</nav>';
 

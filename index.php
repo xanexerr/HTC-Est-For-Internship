@@ -1,7 +1,7 @@
 <?php
 require('connection.php');
 include 'header.php';
-
+include 'navbar.php';
 ?>
 
 <!DOCTYPE html>
@@ -11,8 +11,8 @@ include 'header.php';
     <div class="container  shadow-sm p-0">
         <div class="bg-body " style="min-height:100dvh;">
             <?php
-            include 'navbar.php';
-            $limit = 10;
+
+            $limit = 12;
 
             if (isset($_GET['search_query'])) {
                 // Get search query
@@ -114,12 +114,12 @@ include 'header.php';
             </form>
             <table class="container table table-hover">
                 <thead class="thead-dark">
-                    <tr class="text-center ">
-                        <th class="py-2 thead-dark">ชื่อสถานประกอบการ</th>
-                        <th>ประเภทงาน</th>
-                        <th>ลักษณะงาน</th>
-                        <th>คะแนนรีวิว</th>
-                        <th></th>
+                    <tr class="">
+                        <th class="py-2 ">ชื่อสถานประกอบการ</th>
+                        <th class="py-2 ">ประเภทงาน</th>
+                        <th class="py-2 ">ลักษณะงาน</th>
+                        <th class="py-2 ">คะแนนรีวิว</th>
+                        <th class="py-2 "></th>
                     </tr>
                 </thead>
                 <tbody>

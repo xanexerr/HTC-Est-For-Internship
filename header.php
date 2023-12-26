@@ -34,9 +34,6 @@ if (isset($_SESSION['nowuser_fname']) && $_SESSION['nowuser_lname']) {
         </svg>
         <span style='font-size: 1em;'>$nowuser_fname $nowuser_lname</span>
     </span>";
-
-
-
 }
 echo '</div>';
 echo '</div>';
