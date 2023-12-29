@@ -46,7 +46,7 @@
                 $workplace_id = $row['workplace_id'];
                 $workplace_name = $row['workplace_name'];
                 $workplace_address = $row['workplace_address'];
-                $work_type = $row['work_type'];
+                $row['work_type'] = $row['work_type'];
                 $description = $row['description'];
                 $work_tel = $row['work_tel'];
                 $new_user_id = $row['user_id'];
@@ -76,12 +76,12 @@
 
                         echo '<label for="work_type" class="form-label mt-1">ประเภทงาน</label>';
                         echo '<select class="form-control" name="work_type">';
-                        echo '<option value="เขียนโปรแกรม"' . ($work_type === 'เขียนโปรแกรม' ? ' selected' : '') . '>เขียนโปรแกรม</option>';
-                        echo '<option value="ทำกราฟิก"' . ($work_type === 'ทำกราฟิก' ? ' selected' : '') . '>ทำกราฟิก</option>';
-                        echo '<option value="ระบบเครือข่าย"' . ($work_type === 'ระบบเครือข่าย' ? ' selected' : '') . '>ระบบเครือข่าย</option>';
-                        echo '<option value="ทำเว็บไซต์"' . ($work_type === 'ทำเว็บไซต์' ? ' selected' : '') . '>ทำเว็บไซต์</option>';
-                        echo '<option value="ด้านบริการ"' . ($work_type === 'ด้านบริการ' ? ' selected' : '') . '>ด้านบริการ</option>';
-                        echo '<option value=""' . ($work_type === '' ? ' selected' : '') . '>อื่นๆ</option>';
+                        echo '<option value="เขียนโปรแกรม"' . ($row['work_type'] === 'เขียนโปรแกรม' ? ' selected' : '') . '>เขียนโปรแกรม</option>';
+                        echo '<option value="ทำกราฟิก"' . ($row['work_type'] === 'ทำกราฟิก' ? ' selected' : '') . '>ทำกราฟิก</option>';
+                        echo '<option value="ระบบเครือข่าย"' . ($row['work_type'] === 'ระบบเครือข่าย' ? ' selected' : '') . '>ระบบเครือข่าย</option>';
+                        echo '<option value="ทำเว็บไซต์"' . ($row['work_type'] === 'ทำเว็บไซต์' ? ' selected' : '') . '>ทำเว็บไซต์</option>';
+                        echo '<option value="ด้านบริการ"' . ($row['work_type'] === 'ด้านบริการ' ? ' selected' : '') . '>ด้านบริการ</option>';
+                        echo '<option value=""' . ($row['work_type'] === '' ? ' selected' : '') . '>อื่นๆ</option>';
                         echo '</select>';
 
 
@@ -160,8 +160,8 @@
                             enctype="multipart/form-data">';
                         echo '<label for="workplace_name" class="form-label mt-1">สถานประกอบการ</label>';
                         echo '<select class="form-control my-1" name="workplace">';
-                        $sql = "SELECT workplace_id, workplace_name FROM workplaces";
-                        $result = $connection->query($sql);
+                        $updatestatus = "SELECT workplace_id, workplace_name FROM workplaces";
+                        $result = $connection->query($updatestatus);
                         if ($result->num_rows > 0) {
                             while ($row = $result->fetch_assoc()) {
                                 echo '<option value="' . $row["workplace_id"] . '">' . $row["workplace_name"] . '</option>';

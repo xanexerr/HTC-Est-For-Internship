@@ -22,10 +22,11 @@ if (isset($_SESSION["user_id"])) {
     echo '<nav class="bg-warning d-flex justify-content-center  px-5">';
     echo '<div class="">
         <a href="#" class="p-2 px-3 btn btn-warning mx-1">ลงทะเบียนใช้งานระบบ | ติดต่อทีมงาน</a>
-      </div>';
+        </div>';
     echo '</nav>';
 }
 ?>
 <div class="text-center p-3 bg-primary text-white"">
         <a>&copy; วิทยาลัยเทคนิคหาดใหญ่</a>
     </div>
+

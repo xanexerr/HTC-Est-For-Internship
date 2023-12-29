@@ -7,9 +7,9 @@ include 'navbar.php';
 <!DOCTYPE html>
 <html lang="en">
 
-<body>
-    <div class="container rounded-top rounded-bottom shadow-sm p-0 my-3 border ">
-        <div class="bg-body rounded-bottom">
+<body class="bg-white">
+    <div class="container rounded-top rounded-bottom shadow-sm p-0 my-3 border bg-white">
+        <div class="bg-body rounded-bottom  rounded">
             <?php
 
             $limit = 12;
@@ -67,7 +67,7 @@ include 'navbar.php';
 
 
             <!-- conternt tabel -->
-            <form class="m-0 rounded-top" method="GET">
+            <form class="m-0 rounded-top  rounded" method="GET">
 
                 <div class="input-group container rounded-top bg-secondary p-3 ">
                     <input type="text" class="form-control rounded px-3" placeholder="ค้นหาสถานประกอบการ...."
@@ -88,27 +88,25 @@ include 'navbar.php';
 
                     <div class="col-xs-2 ">
                         <select class="form-control" name="work_type_filter" onchange="this.form.submit()">
-                            <option value="">ประเภทงานทั้งหมด</option>
+                            <option value="">ประเภทงาน : ทั้งหมด</option>
                             <option value="เขียนโปรแกรม" <?php if (isset($_GET['work_type_filter']) && $_GET['work_type_filter'] === 'เขียนโปรแกรม')
-                                echo 'selected'; ?>>ประเภทงานเขียนโปรแกรม
+                                echo 'selected'; ?>>ประเภทงาน : เขียนโปรแกรม
                             </option>
                             <option value="ทำกราฟิก" <?php if (isset($_GET['work_type_filter']) && $_GET['work_type_filter'] === 'ทำกราฟิก')
-                                echo 'selected'; ?>>ประเภทงานทำกราฟิก</option>
+                                echo 'selected'; ?>>ประเภทงาน : ทำกราฟิก</option>
                             <option value="ระบบเครือข่าย" <?php if (isset($_GET['work_type_filter']) && $_GET['work_type_filter'] === 'ระบบเครือข่าย')
-                                echo 'selected'; ?>>ประเภทงานระบบเครือข่าย
+                                echo 'selected'; ?>>ประเภทงาน : ระบบเครือข่าย
                             </option>
                             <option value="ทำเว็บไซต์" <?php if (isset($_GET['work_type_filter']) && $_GET['work_type_filter'] === 'ทำเว็บไซต์')
-                                echo 'selected'; ?>>ประเภทงานทำเว็บไซต์
+                                echo 'selected'; ?>>ประเภทงาน : ทำเว็บไซต์
                             </option>
                             <option value="ด้านบริการ" <?php if (isset($_GET['work_type_filter']) && $_GET['work_type_filter'] === 'ด้านบริการ')
-                                echo 'selected'; ?>>ประเภทงานด้านบริการ
+                                echo 'selected'; ?>>ประเภทงาน : ด้านบริการ
                             </option>
                         </select>
 
                     </div>
                 </div>
-
-
             </form>
 
             <table class="container table table-hover mb-0  ">
