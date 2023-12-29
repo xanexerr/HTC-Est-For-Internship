@@ -67,7 +67,7 @@ include 'navbar.php';
 
 
             <!-- conternt tabel -->
-            <form class="m-0 rounded-top  rounded" method="GET">
+            <form class="m-0 rounded-top  rounded col-12" method="GET">
 
                 <div class="input-group container rounded-top bg-secondary p-3 ">
                     <input type="text" class="form-control rounded px-3" placeholder="ค้นหาสถานประกอบการ...."
@@ -77,7 +77,7 @@ include 'navbar.php';
                         ?>">
 
 
-                    <button class="btn btn-primary rounded px-3 mx-2" type="submit" style="font-size: 1em;">
+                    <button class="btn btn-primary rounded px-3 mx-2 col-1" type="submit" style="font-size: 1em;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
                             class="bi bi-search" viewBox="0 0 16 16" style="vertical-align: middle;">
                             <path
@@ -86,8 +86,8 @@ include 'navbar.php';
                     </button>
 
 
-                    <div class="col-xs-2 ">
-                        <select class="form-control" name="work_type_filter" onchange="this.form.submit()">
+                    <div class="col-2">
+                        <select class="form-control " name="work_type_filter" onchange="this.form.submit()">
                             <option value="">ประเภทงาน : ทั้งหมด</option>
                             <option value="เขียนโปรแกรม" <?php if (isset($_GET['work_type_filter']) && $_GET['work_type_filter'] === 'เขียนโปรแกรม')
                                 echo 'selected'; ?>>ประเภทงาน : เขียนโปรแกรม
@@ -111,12 +111,12 @@ include 'navbar.php';
 
             <table class="container table table-hover mb-0  ">
                 <thead class="thead-dark">
-                    <tr class="">
-                        <th class="py-2 table-secondary ">ชื่อสถานประกอบการ</th>
-                        <th class="py-2 table-secondary">ประเภทงาน</th>
-                        <th class="py-2 table-secondary">ลักษณะงาน</th>
-                        <th class="py-2 table-secondary text-center">คะแนนรีวิว</th>
-                        <th class="py-2 table-secondary"></th>
+                    <tr class="col-9">
+                        <th class="py-2 table-secondary  col-3">ชื่อสถานประกอบการ</th>
+                        <th class="py-2 table-secondary  col-1">ประเภทงาน</th>
+                        <th class="py-2 table-secondary col-3">ลักษณะงาน</th>
+                        <th class="py-2 table-secondary text-center col-1">คะแนนรีวิว</th>
+                        <th class="py-2 table-secondary col-1"></th>
                     </tr>
                 </thead>
                 <tbody>

@@ -102,24 +102,15 @@
                                         </option>
                                     </select>
                                 </div>
-                                <div class="col-xs-2 mx-2">
-                                    <select class="form-control" name="work_type_filter" onchange="this.form.submit()">
-                                        <option value="">ทั้งหมด</option>
-                                        <option value="1" <?php if (isset($_GET['status_filter']) && $_GET['status_filter'] === '1')
-                                            echo 'selected'; ?>>แสดง
-                                        </option>
-                                        <option value="0" <?php if (isset($_GET['status_filter']) && $_GET['status_filter'] === '0')
-                                            echo 'selected'; ?>>ไม่แสดง</option>
-                                    </select>
-                                </div>
+
                             </div>
                         </form>
-                        <div class="col  text-left bg-primary px-4 ">
+                        <div class="col  text-center bg-dark px-4 mx-auto">
                             <span>
-                                <a href="#" class="text-white btn btn-primary ">สถานประกอบการที่รอการอนุมัติ</a>
+                                <a href="#" class="text-white btn btn-none ">สถานประกอบการที่รอการอนุมัติ</a>
                             </span>
                             <span>
-                                <a href="admin-add-form.php" class="text-white btn btn-primary ">เพิ่มสถานประกอบการ</a>
+                                <a href="admin-add-form.php" class="text-white btn btn-none ">เพิ่มสถานประกอบการ</a>
                             </span>
                         </div>
                         <div class="px-4">

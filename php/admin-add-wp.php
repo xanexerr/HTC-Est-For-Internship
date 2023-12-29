@@ -9,11 +9,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // require the database connection
     require '../connection.php';
 
-    $updatestatus = "INSERT INTO workplaces (workplace_name, workplace_address, work_type, description, work_tel, user_id, rating) 
+    $updatewp = "INSERT INTO workplaces (workplace_name, workplace_address, work_type, description, work_tel, user_id, rating) 
         VALUES (:wp_name, :wp_address, :work_type, :description, :work_tel, NULL, '')";
 
     // Prepare the SQL statement
-    $stmt = $conn->prepare($updatestatus);
+    $stmt = $conn->prepare($updatewp);
 
     // Bind parameters with values
     $stmt->bindParam(':wp_name', $wp_name);
