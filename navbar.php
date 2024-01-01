@@ -18,7 +18,7 @@ function displayLoggedInHeader($nowuser_fname, $nowuser_lname, $role, $nowwp_id)
             <a href="#" class="nav-link btn btn-primary text-white px-3">ระบบจัดการบัญชีผู้ใข้</a>
             </div>';
         echo '<div class="">
-            <a href="#" class="nav-link btn btn-primary text-white px-3">ระบบจัดการความคิดเห็น</a>
+            <a href="admin-comment.php" class="nav-link btn btn-primary text-white px-3">ระบบจัดการความคิดเห็น</a>
             </div>';
         echo '<div class="">
             <a href="admin-wp.php" class="nav-link btn btn-primary text-white px-3" id="admin-wp">ระบบจัดสถานประกอบการ</a>

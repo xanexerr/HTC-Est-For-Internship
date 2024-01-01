@@ -21,13 +21,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "<script>
                 alert('แก้ไขข้อมูลสำเร็จ!');
                 window.location.href = '../index.php';
-              </script>";
+                </script>";
         exit();
     } else {
         // Update failed
-        echo "Error updating user data: " . $connection->error;
+        echo "เกิดข้อผิดพลาด : " . $connection->error;
     }
 
-    $stmt->close();
+    // $stmt->close();
 }
 ?>

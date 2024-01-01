@@ -92,10 +92,10 @@ include("header.php")
 
                             <label for="description" class="form-label mt-1">ลักษณะงาน</label>
                             <input type="text" class="form-control" name="description"
-                                value=" <?php echo $row['description']; ?>" required>
+                                value="<?php echo $row['description']; ?>" required>
 
                             <label for="work_tel" class="form-label mt-1">เบอร์โทรติดต่อ</label>
-                            <input type="tel" class="form-control" name="work_tel" value=" <?php echo $row['work_tel']; ?>"
+                            <input type="tel" class="form-control" name="work_tel" value="<?php echo $row['work_tel']; ?>"
                                 required>
 
                             <label for="workplace_address" class="form-label mt-1">ที่อยู่บริษัท</label>
