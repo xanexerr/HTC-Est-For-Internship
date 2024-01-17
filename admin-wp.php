@@ -7,21 +7,7 @@
     <?php
     require('connection.php');
     include 'navbar.php';
-    if (!isset($_SESSION["user_id"])) {
-        echo '<script>';
-        echo 'alert("คุณยังไม่ได้เข้าสู่ระบบ");';
-        echo 'window.location.href = "login.php";';
-        echo '</script>';
-        exit();
-    } else {
-        if ($_SESSION["role"] !== 'admin') {
-            echo '<script>';
-            echo 'alert("คุณไม่มีสิทธิเข้าถึง!");';
-            echo 'window.location.href = "index.php";';
-            echo '</script>';
-            exit();
-        }
-    }
+    include('php/admin-check.php');
     ?>
     <?php
     $updatestatus = "SELECT COUNT(*) FROM workplaces";
@@ -67,7 +53,7 @@
             <div class="my-3 bg-body  shadow">
                 <div class=" justify-content-center ">
                     <div class="border p-0 ">
-                        <p class='h4 py-2 px-auto bg-dark border text-white mb-0 text-center '>
+                        <p class='h4 py-2 px-auto bg-dark text-white mb-0 text-center '>
                             เมนูแก้ไขข้อมูลสถานประกอบการ </p>
                         <form class="m-0 " method="GET">
                             <div class="input-group container  bg-secondary p-3 ">
@@ -105,14 +91,11 @@
 
                             </div>
                         </form>
+
                         <div class="col  text-center bg-dark px-4 mx-auto">
-                            <span>
-                                <a href="#" class="text-white btn btn-none ">สถานประกอบการที่รอการอนุมัติ</a>
-                            </span>
-                            <span>
-                                <a href="admin-add-form.php" class="text-white btn btn-none ">เพิ่มสถานประกอบการ</a>
-                            </span>
+                            <a href="admin-add-form.php" class="text-white btn btn-none ">เพิ่มสถานประกอบการ</a>
                         </div>
+
                         <div class="px-4">
                             <div class="">
                                 <p class="fs-5 rounded p-1 px-3 m-0 form-control border-0 text-center">
@@ -151,24 +134,22 @@
                                                         </td>
                                                         <td class="text-center">
                                                             <div class="btn-group  ">
-                                                                <a class="btn btn-primary"
+                                                                <a class="btn btn-sm btn-primary"
                                                                     href="wp-detail.php?id=<?php echo $row['workplace_id']; ?>">รายละเอียด
                                                                 </a>
                                                                 <a href="admin-wp-edit.php?id=<?php echo $row['workplace_id']; ?>"
-                                                                    class="btn btn-warning">แก้ไขข้อมูล</a>
+                                                                    class="btn btn-sm btn-warning">แก้ไขข้อมูล</a>
                                                             </div>
                                                         </td>
-                                                        <td>
-                                                            <?php if ($row['show'] == '1'): ?>
-                                                                <div class="text-center ">
-                                                                    <a class='px-2 btn btn-success d-block w-100'>แสดง</a>
-                                                                </div>
-                                                            <?php else: ?>
-                                                                <div class="text-center ">
-                                                                    <a class='btn btn-danger d-block w-100'>ไม่แสดง</a>
-                                                                </div>
-                                                            <?php endif; ?>
+
+                                                        <td class="text-center <?php echo ($row['show'] == 1) ? ' bg-success text-white' : 'bg-danger text-white'; ?>"
+                                                            style="vertical-align: middle;">
+                                                            <p class="m-0">
+                                                                <?php echo ($row['show'] == 1) ? 'แสดง' : 'ไม่แสดง'; ?>
+                                                            </p>
                                                         </td>
+
+
                                                     </tr>
                                                     <div class="modal fade" id="my-modal<?php echo $row['workplace_id']; ?>"
                                                         tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

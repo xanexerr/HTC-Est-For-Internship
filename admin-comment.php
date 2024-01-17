@@ -7,21 +7,7 @@
     <?php
     require('connection.php');
     include 'navbar.php';
-    if (!isset($_SESSION["user_id"])) {
-        echo '<script>';
-        echo 'alert("คุณยังไม่ได้เข้าสู่ระบบ");';
-        echo 'window.location.href = "login.php";';
-        echo '</script>';
-        exit();
-    } else {
-        if ($_SESSION["role"] !== 'admin') {
-            echo '<script>';
-            echo 'alert("คุณไม่มีสิทธิเข้าถึง!");';
-            echo 'window.location.href = "index.php";';
-            echo '</script>';
-            exit();
-        }
-    }
+    include('php/admin-check.php');
     ?>
     <?php
     $updatestatus = "SELECT COUNT(*) FROM comments";

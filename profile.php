@@ -1,113 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<!-- header  -->
 <?php
 include 'header.php';
 ?>
-
-<!-- body -->
+<!DOCTYPE html>
+<html lang="en">
 
 <body>
-    <!-- top banner  -->
     <?php
-    include("navbar.php");
+    require('connection.php');
+    include('navbar.php');
+
+    $session_userid = $_SESSION['user_id'];
+
+    $stmt = $conn->prepare("SELECT * FROM users WHERE user_id = :session_userid");
+    $stmt->bindParam(':session_userid', $session_userid, PDO::PARAM_STR);
+    $stmt->execute();
+
+    // Fetch the user data
+    $userData = $stmt->fetchAll(PDO::FETCH_ASSOC);
     ?>
+    <div class="flex-container">
+        <div class="container ">
+            <div class="my-3 bg-body  shadow  w-75  mx-auto">
+                <div class=" justify-content-center">
+                    <p class='h4 py-2 px-auto bg-dark text-white mb-0 text-center '>
+                        แก้ไขข้อมูลส่วนตัว </p>
+                    <?php foreach ($userData as $row): ?>
 
+                        <form class="border p-3 " name="edit_workplace_form" method="POST" action="php/profileupdate.php"
+                            enctype="multipart/form-data">
 
-    <!-- content -->
+                            <label for="user_id" class="form-label">รหัสผู้ใช้</label>
+                            <input type="text" class="form-control text-danger" name="user_id"
+                                value="<?= $row['user_id']; ?>" readonly>
 
-    <div class="container d-flex justify-content-center align-items-center p-3 my-4 min-vh-100">
+                            <label for="user_fname" class="form-label mt-1">ชื่อ</label>
+                            <input type="text" class="form-control" name="user_fname" value="<?= $row['user_fname']; ?>"
+                                required>
 
-        <?php
-        // Check if the user is logged in
-        if (isset($_SESSION["user_id"])) {
-            $user_id = $_SESSION["user_id"];
+                            <label for="user_lname" class="form-label mt-1">นามสกุล</label>
+                            <input type="text" class="form-control" name="user_lname" value="<?= $row['user_lname']; ?>"
+                                required>
 
-            $get_user = "SELECT * FROM users WHERE user_id = ?";
-            $stmt_user = $connection->prepare($get_user);
-            $stmt_user->bind_param("s", $user_id);
-            $stmt_user->execute();
-            $result = $stmt_user->get_result();
-            // Fetch workplace data
-            $row = $result->fetch_assoc();
+                            <label for="user_tel" class="form-label mt-1">เบอร์โทร</label>
+                            <input type="text" class="form-control" name="user_tel" value="<?= $row['user_tel']; ?>"
+                                required>
 
-
-            $user_fname = $row['user_fname'];
-            $user_lname = $row['user_lname'];
-            $user_tel = $row['user_tel'];
-            $password = $row['password'];
-
-            echo '<div class="container d-flex justify-content-center align-items-center p-3 " style="min-height: 85vh; ">
-            <div style="width: 768px;  shadow p-4">';
-            echo ' <p class="h4 py-2 px-auto bg-dark border text-white mb-0 text-center">ข้อมูลส่วนตัว </p>';
-            echo '<form onsubmit="return validatePassword()" class="border shadow  p-4" name="edit_name" method="POST"
-                    action="php/update-user-data.php" enctype="multipart/form-data">';
-            echo '   <label for="work_type" class="form-label ">รหัสนักเรียน </label>';
-            echo '<input type="text" disabled class="form-control" name="user_id" value="' . $user_id . '"required>';
-            echo '  <label for="work_type" class="form-label mt-3">ชื่อจริง</label>';
-            echo '  <input type="text" class="form-control" name="user_fname" value="' . $user_fname . '"required>';
-            echo '<label for="work_type" class="form-label mt-3">นามสกุล</label>';
-            echo '<input type="text" class="form-control" name="user_lname" value="' . $user_lname . '"required>';
-            echo '   <label for="work_type" class="form-label mt-3">รหัสผ่าน</label>';
-            echo ' <input type="password" class="form-control" name="password" id="password" value="' . $password . '"required>';
-            echo ' <label for="work_type" class="form-label mt-3">ยืนยันรหัสผ่าน</label>';
-            echo '<input type="password" class="form-control" name="password" id="conpassword" value="' . $password . '"required>';
-            echo '<div class="align-items-center pt-2 ml-3">';
-            echo '<input type="checkbox" class="form-check-input" id="showPassword" onclick="showPass()">';
-            echo ' <label class="form-check-label " for="showPassword">แสดงรหัสผ่าน</label>';
-            echo ' </div>';
-            echo '<button type="submit" value="submit" class="mt-3 btn btn-success w-100">บันทึกการเปลี่ยนแปลง</button>';
-            echo '  <a href="index.php" class="mt-1 btn btn-danger w-100">ยกเลิก</a>';
-            echo '</form>';
-            echo '</div>';
-            echo ' </div>';
-        } else {
-            echo '<script>';
-            echo 'alert("คุณยังไม่ได้เข้าสู่ระบบ");';
-            echo 'window.location.href = "index.php";';
-            echo '</script>';
-        }
-
-        ?>
+                            <button type="submit" value="submit"
+                                class="mt-3 btn btn-success w-100">บันทึกการเปลี่ยนแปลง</button>
+                            <a href="admin-users-manage.php" class="mt-1 btn btn-warning w-100">ยกเลิก</a>
+                        </form>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
     </div>
+    <?php include 'script.php'; ?>
+</body>
 
-    <!-- footer  -->
-    <?php
-    if (isset($_SESSION["user_id"])) {
-
-    } else {
-
-        echo '</nav>';
-    }
-    ?>
-    <script>
-        function showPass() {
-            var password = document.getElementById("password");
-            var conpassword = document.getElementById("conpassword");
-
-            if (password.type === "password") {
-                password.type = "text";
-                conpassword.type = "text";
-            } else {
-                password.type = "password";
-                conpassword.type = "password";
-            }
-        }
-
-        function validatePassword() {
-            var password = document.getElementById("password").value;
-            var conpassword = document.getElementById("conpassword").value;
-
-            if (password !== conpassword) {
-                alert("กรุณาใส่รหัสผ่านให้ตรงกัน");
-                return false; // ยกเลิกการ submit ฟอร์ม
-            }
-            return true; // สามารถ submit ฟอร์มได้
-        }
-        <?php
-        include 'script.php';
-        ?>
-</body >
-
-</html >
+</html>

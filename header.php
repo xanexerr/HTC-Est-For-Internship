@@ -11,13 +11,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="css/custom.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.0"></script>
 </head>
 
 <?php
 session_start();
 require 'connection.php';
 echo '<div class="bg-primary">';
-echo '<div class="container d-flex flex-wrap justify-content-center py-3  mx-auto border-bottom text-white bg-primary px-3">';
+echo '<div class="container d-flex flex-wrap justify-content-center py-3  mx-auto border-none text-white bg-primary px-3">';
 echo '<a  class="d-flex align-items-center  mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
         <span  class="fs-4 text-white m-1 text-shadow">
         ระบบรวบรวมสถานประกอบการ

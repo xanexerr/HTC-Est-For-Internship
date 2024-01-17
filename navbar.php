@@ -15,7 +15,7 @@ function displayLoggedInHeader($nowuser_fname, $nowuser_lname, $role, $nowwp_id)
     echo '</li>';
     if ($_SESSION['role'] == "admin") {
         echo '<div class="">
-            <a href="#" class="nav-link btn btn-primary text-white px-3">ระบบจัดการบัญชีผู้ใข้</a>
+            <a href="admin-users-manage.php" class="nav-link btn btn-primary text-white px-3">ระบบจัดการบัญชีผู้ใข้</a>
             </div>';
         echo '<div class="">
             <a href="admin-comment.php" class="nav-link btn btn-primary text-white px-3">ระบบจัดการความคิดเห็น</a>
@@ -100,4 +100,5 @@ if (isset($_SESSION["user_id"])) {
 } else {
     displayLoggedOutHeader();
 }
+
 ?>

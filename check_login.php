@@ -21,6 +21,7 @@ if (!$result || $result->num_rows === 0) {
     session_write_close();
     echo '<script>window.location.href = "index.php";</script>';
 
+
 }
 $connection->close();
 ?>
