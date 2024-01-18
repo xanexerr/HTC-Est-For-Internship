@@ -17,18 +17,21 @@
         $user_fname = htmlspecialchars($_POST['user_fname']);
         $user_lname = htmlspecialchars($_POST['user_lname']);
         $user_tel = ($_POST['user_tel']);
+        $pwd = $_POST['password'];
 
         $updateStatusQuery = "UPDATE users
-    SET 
-        user_fname = ?,
-        user_lname = ?,
-        user_tel = ?
-    WHERE user_id = ?";
+                      SET 
+                          user_fname = ?,
+                          user_lname = ?,
+                          user_tel = ?,
+                          password = ?
+                      WHERE user_id = ?";
 
         $stmt = $connection->prepare($updateStatusQuery);
 
-        // Use 'ssss' since you have 4 placeholders
-        $stmt->bind_param("ssss", $user_fname, $user_lname, $user_tel, $user_id);
+
+        $stmt->bind_param("sssss", $user_fname, $user_lname, $user_tel, $pwd, $user_id);
+
 
         if ($stmt->execute()) {
             echo "<script>

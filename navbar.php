@@ -27,7 +27,7 @@ function displayLoggedInHeader($nowuser_fname, $nowuser_lname, $role, $nowwp_id)
 
     if ($_SESSION['role'] == "teacher") {
         echo '<div class="">
-            <a href="#" class="nav-link btn btn-primary text-white px-3">เพิ่มสถานประกอบการ</a>
+            <a href="teacher-wp.php" class="nav-link btn btn-primary text-white px-3">จัดการสถานประกอบการ</a>
             </div>';
     }
 

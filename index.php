@@ -17,23 +17,27 @@ include 'navbar.php';
             if (isset($_GET['search_query'])) {
                 $search_query = $_GET['search_query'];
                 $work_type_filter = ($_GET['work_type_filter']);
-
+                $sorting = ($_GET['sorting']);
+                if ($sorting == 'highscore'){
+                    $sort = "ORDER BY `rating` DESC";
+                }elseif($sorting == 'newest'){
+                    $sort = "ORDER BY `workplace_id` DESC";
+                }
                 if (isset($_GET['work_type_filter']) && !empty($_GET['work_type_filter'])) {
                     $work_type_filter = $_GET['work_type_filter'];
-                    $query = "SELECT * FROM workplaces WHERE workplace_name LIKE ? AND work_type = ?";
+                    $query = "SELECT * FROM workplaces WHERE workplace_name LIKE ? AND work_type = ? $sort";
                     $stmt = $conn->prepare($query);
                     $stmt->execute(["%$search_query%", $work_type_filter]);
                 } else {
                     // ถ้าไม่มีฟิลเตอร์แสดงท้งหมด
-                    $stmt = $conn->prepare("SELECT * FROM workplaces WHERE workplace_name LIKE ?");
+                    $stmt = $conn->prepare("SELECT * FROM workplaces WHERE workplace_name LIKE ? $sort");
                     $stmt->execute(["%$search_query%"]);
                 }
 
                 $workplacesData = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 $totalRows = $stmt->rowCount();
 
-                //ถ้าค้นหาไม่เจอ แจ้งเตือนและกลับหน้าแรก
-                if ($search_query == '' && $work_type_filter == '') {
+                if ($search_query == '' && $work_type_filter == '' && $sorting == '') {
                     echo '<script>window.location.href = "index.php";</script>';
                     exit();
                 }
@@ -56,8 +60,8 @@ include 'navbar.php';
                 // Get the current page number from the URL query parameter
                 $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
                 $offset = ($currentPage - 1) * $limit;
-
-                $stmt = $conn->prepare("SELECT * FROM workplaces WHERE `show` = '1' LIMIT :limit OFFSET :offset");
+                $sort = "ORDER BY `workplace_id` DESC";
+                $stmt = $conn->prepare("SELECT * FROM workplaces WHERE `show` = '1' $sort LIMIT :limit OFFSET :offset;");
                 $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
                 $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
                 $stmt->execute();
@@ -67,24 +71,31 @@ include 'navbar.php';
 
 
             <!-- conternt tabel -->
-            <form class="m-0 rounded-top  rounded col-12" method="GET">
+            <form class="m-0  col-12" method="GET">
 
-                <div class="input-group container rounded-top bg-secondary p-3 ">
-                    <input type="text" class="form-control rounded px-3" placeholder="ค้นหาสถานประกอบการ...."
+                <div class="input-group container  bg-secondary p-3  ">
+                    <div class="col-2 me-2 ">
+                        <select class="form-control rounded-0 " name="sorting" onchange="this.form.submit()">
+                            <option value="newest">เรียงจากเพิ่มล่าสุด</option>
+                            <option value="highscore" <?php if (isset($_GET['sorting']) && $_GET['sorting'] === 'highscore')
+                                echo 'selected'; ?>>เรียงจากคะแนนรีวิว</option>
+                        </select>
+                    </div>
+        
+                    <input type="text" class="form-control rounded-0 px-3" placeholder="ค้นหาสถานประกอบการ...."
                         name="search_query" value="<?php if (isset($search_query)) {
                             echo $search_query;
                         }
                         ?>">
 
 
-                    <button class="btn btn-primary rounded px-3 mx-2 col-1" type="submit" style="font-size: 1em;">
+                    <button class="btn btn-primary rounded-0  px-3 me-2 col-1" type="submit" style="font-size: 1em;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
                             class="bi bi-search" viewBox="0 0 16 16" style="vertical-align: middle;">
                             <path
                                 d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
                         </svg> Search
                     </button>
-
 
                     <div class="col-2">
                         <select class="form-control " name="work_type_filter" onchange="this.form.submit()">
@@ -146,7 +157,7 @@ include 'navbar.php';
                             </td>
                             <td class="text-center">
                                 <div class="btn-group ">
-                                    <a class="btn btn-primary " href="wp-detail.php?id=<?php echo $row['workplace_id']; ?>">
+                                    <a class="btn btn-sm btn-primary " href="wp-detail.php?id=<?php echo $row['workplace_id']; ?>">
                                         รายละเอียด
                                     </a>
 

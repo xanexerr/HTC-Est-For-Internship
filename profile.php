@@ -45,9 +45,22 @@ include 'header.php';
                             <input type="text" class="form-control" name="user_tel" value="<?= $row['user_tel']; ?>"
                                 required>
 
+                            <label for="password" class="form-label mt-1">รหัสผ่าน</label>
+                            <div class="d-flex align-items-center">
+                                <input type="password" class="form-control " name="password" id="passwordField"
+                                    value="<?= $row['password']; ?>" required>
+                                <a class="btn btn-secondary rounded col-1" type="button" id="showPasswordBtn"></a>
+                            </div>
+
+
                             <button type="submit" value="submit"
                                 class="mt-3 btn btn-success w-100">บันทึกการเปลี่ยนแปลง</button>
-                            <a href="admin-users-manage.php" class="mt-1 btn btn-warning w-100">ยกเลิก</a>
+                            <a href="
+                            <?php if ($_SESSION['role'] == 'admin ') {
+                                echo 'admin-users-manage.php';
+                            } else {
+                                echo 'index.php';
+                            } ?>" class="mt-1 btn btn-warning w-100">ยกเลิก</a>
                         </form>
                     <?php endforeach; ?>
                 </div>
@@ -55,6 +68,28 @@ include 'header.php';
         </div>
     </div>
     <?php include 'script.php'; ?>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const passwordField = document.getElementById('passwordField');
+            const showPasswordBtn = document.getElementById('showPasswordBtn');
+
+            updateButtonText(); // Set initial text content
+
+            showPasswordBtn.addEventListener('click', function () {
+                const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordField.setAttribute('type', type);
+                updateButtonText(); // Update text content on button click
+            });
+
+            function updateButtonText() {
+                if (passwordField.getAttribute('type') === 'password') {
+                    showPasswordBtn.textContent = 'แสดง'; // Display
+                } else {
+                    showPasswordBtn.textContent = 'ซ่อน'; // Hide
+                }
+            }
+        });
+    </script>
 </body>
 
 </html>

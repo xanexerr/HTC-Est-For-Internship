@@ -14,19 +14,37 @@ include("header.php")
     include 'navbar.php';
     if (!isset($_SESSION["user_id"])) {
         echo '<script>';
-        echo 'alert("คุณยังไม่ได้เข้าสู่ระบบ");';
-        echo 'window.location.href = "login.php";';
+        echo 'Swal.fire({
+        title: "คุณยังไม่ได้เข้าสู่ระบบ",
+        icon: "warning",
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "OK"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "login.php";
+            }
+        });';
         echo '</script>';
+
         exit();
     } else {
-        if ($_SESSION["role"] !== 'admin') {
+        if ($_SESSION["role"] !== 'admin' && $_SESSION["role"] !== 'teacher') {
             echo '<script>';
-            echo 'alert("คุณไม่มีสิทธิเข้าถึง!");';
-            echo 'window.location.href = "index.php";';
+            echo 'Swal.fire({
+        title: "คุณไม่มีสิทธิเข้าถึง!",
+        icon: "warning",
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "OK"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "index.php";
+            }
+        });';
             echo '</script>';
             exit();
         }
     }
+
 
     $workplace_id = $_GET['id'];
     $stmt = $conn->prepare("SELECT COUNT(*) FROM workplaces ");
@@ -49,19 +67,6 @@ include("header.php")
 
                         <form class="border p-3" name="edit_workplace_form" method="POST" action="php/admin-wp-update.php"
                             enctype="multipart/form-data">
-
-                            <?php if ($row['show'] == '0'): ?>
-                                <div class="text-center ">
-                                    <a href='php/show-status.php?id=<?php echo $row['workplace_id']; ?>'
-                                        class='px-2 btn btn-success d-block w-100'>ไม่ได้แสดงสถานประกอบการ : คลิกเพื่อแสดงผล</a>
-                                </div>
-                            <?php else: ?>
-                                <div class="text-center ">
-                                    <a href='php/show-status.php?id=<?php echo $row['workplace_id']; ?>'
-                                        class='btn btn-danger d-block w-100'>กำลังแสดงผลบนเว็บไซต์ :
-                                        คลิกเพื่อเก็บสถานประกอบการ</a>
-                                </div>
-                            <?php endif; ?>
                             <label for="workplace_id" class="form-label">รหัสสถานประกอบการ</label>
                             <input type="text" class="form-control text-danger" name="workplace_id" readonly
                                 value="<?php echo $row['workplace_id']; ?>">
@@ -113,11 +118,6 @@ include("header.php")
                             <a href="admin-wp.php" class="mt-1 btn btn-danger w-100">ยกเลิก</a>
                         </form>
 
-                        <div class="form-group">
-                            <label for="map">แผนที่</label>
-                            <input type="text" class="form-control" name="map" id="map" rows="4"
-                                value="<?php echo $row['map']; ?>">
-                        </div>
                     <?php endforeach; ?>
 
 

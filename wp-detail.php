@@ -16,9 +16,11 @@ include "navbar.php";
     $stmt = $conn->prepare("SELECT * FROM workplaces WHERE `workplace_id` =  '$workplace_id' ");
     $stmt->execute();
     $workplacesData = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+    $mapdata = '7.001266781370485, 100.47979575236882';
     ?>
-    <div class="container  px-0 border   shadow rounded my-3">
+    <div class="container  px-0 border   shadow rounded my-3 w-75">
+
+
         <p class='h4 py-2  bg-dark border text-white  mb-0 text-center  rounded-top'>รายละเอียด </p>
         <div class="p-5 ">
 
@@ -36,9 +38,12 @@ include "navbar.php";
                 <p class="h5">เบอร์โทร :
                     <?php echo $row['work_tel']; ?>
                 </p>
+                <a class="h4 btn btn-secondary" href="<?php echo $row['map']; ?>" target="_blank">ดูแผนที่สถานประกอบการ
+                </a>
                 <p class="h5">ที่อยู่ :
                     <?php echo $row['workplace_address']; ?>
                 </p>
+
                 <?php
                 $queryComments = "SELECT comment_text FROM comments WHERE workplace_id = ? AND `show` = 1";
                 $stmtComments = $connection->prepare($queryComments);

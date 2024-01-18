@@ -15,6 +15,10 @@
         window.location.href = window.location.pathname + '?itemsPerPage=' + selectedValue;
     }
 </script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCto2bb-WrV5qIsfUWRpdTYCsi-0VzvDys&libraries=places"
+    defer></script>
+
+
 <?php
 if (isset($_SESSION["user_id"])) {
 
@@ -29,4 +33,3 @@ if (isset($_SESSION["user_id"])) {
 <div class="text-center p-3 bg-primary text-white"">
         <a>&copy; วิทยาลัยเทคนิคหาดใหญ่</a>
     </div>
-

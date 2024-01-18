@@ -13,18 +13,37 @@ include("header.php")
         ?>
     <?php
     require('connection.php');
-    if (!isset($_SESSION["username"])) {
+    if (!isset($_SESSION["user_id"])) {
         echo '<script>';
-        echo 'alert("คุณยังไม่ได้เข้าสู่ระบบ");';
-        echo 'window.location.href = "login.php";';
+        echo 'Swal.fire({
+        title: "คุณยังไม่ได้เข้าสู่ระบบ",
+        icon: "warning",
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "OK"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "login.php";
+            }
+        });';
         echo '</script>';
+
         exit();
-    } else if ($_SESSION["role"] !== 'librarian' && $_SESSION["role"] !== 'admin') {
-        echo '<script>';
-        echo 'alert("คุณไม่มีสิทธิเข้าถึง!");';
-        echo 'window.location.href = "index.php";';
-        echo '</script>';
-        exit();
+    } else {
+        if ($_SESSION["role"] !== 'admin' && $_SESSION["role"] !== 'teacher') {
+            echo '<script>';
+            echo 'Swal.fire({
+        title: "คุณไม่มีสิทธิเข้าถึง!",
+        icon: "warning",
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "OK"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "index.php";
+            }
+        });';
+            echo '</script>';
+            exit();
+        }
     }
     ?>
     <!-- content -->
@@ -38,6 +57,11 @@ include("header.php")
                     method="POST">
 
                     <div class="form-group">
+                        <label for="username">รหัสประจำตัว</label>
+                        <input class="form-control" type="text" name="username" id="username" required>
+                    </div>
+
+                    <div class="form-group">
                         <label for="user_fname">ชื่อจริง</label>
                         <input class="form-control" type="text" name="user_fname" id="user_fname" required>
                     </div>
@@ -47,16 +71,17 @@ include("header.php")
                         <input class="form-control" type="text" name="user_lname" id="user_lname" required>
                     </div>
 
-                    <div class="form-group">
-                        <label for="username">รหัสประจำตัว</label>
-                        <input class="form-control" type="text" name="username" id="username" required>
-                    </div>
+                    <label for="user_tel" class="form-label mt-1">เบอร์โทร</label>
+                    <input type="text" class="form-control" name="user_tel" required>
 
                     <div class="form-group">
                         <label for="user_type">ประเภทบัญชี</label>
                         <select class="form-control" name="user_type" id="user_type">
                             <option value="student">นักเรียน</option>
                             <option value="teacher">อาจารย์</option>
+                            <?php if ($_SESSION['role'] == 'admin') { ?>
+                                <option value="admin">ผู้ดูแลระบบ</option>
+                            <?php } ?>
                         </select>
                     </div>
 
