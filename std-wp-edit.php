@@ -93,6 +93,12 @@
                             <label for="workplace_tel" class="col-form-label">เบอร์โทรติดต่อ:</label>
                             <input type="text" require class="form-control" name="workplace_tel">
                         </div>
+
+                        <div class="form-group">
+                            <label for="map">แผนที่</label>
+                            <input type="text" class="form-control" name="map" id="map" rows="4">
+                        </div>
+
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button button type="submit" name="submit" class="btn btn-success">Submit</button>
@@ -103,14 +109,14 @@
         </div>
     </div>
 
-    <div class="container d-flex justify-content-center align-items-center p-4 my-4 min-vh-100">
+    <div class="container d-flex justify-content-center align-items-center px-4 my-3 min-vh-100">
 
         <?php
         // Check if the user is logged in
         if (isset($_SESSION["user_id"])) {
             $user_id = $_SESSION["user_id"];
 
-            $get_user_workplace = "SELECT workplace_id, workplace_name, workplace_address, work_type, description, work_tel, user_id FROM workplaces WHERE user_id = ?";
+            $get_user_workplace = "SELECT* FROM workplaces WHERE user_id = ?";
             $stmt_usercomment = $connection->prepare($get_user_workplace);
             $stmt_usercomment->bind_param("s", $user_id);
             $stmt_usercomment->execute();
@@ -136,12 +142,13 @@
                 $_SESSION["description"] = $row['description'];
                 $_SESSION["work_tel"] = $row['work_tel'];
                 $_SESSION["new_user_id"] = $row['user_id'];
+                $map = $row['map'];
 
 
                 $_SESSION["workplace_name"] = $workplace_name;
                 ?>
                 <!-- Add a form for editing workplace data -->
-                <div class="container d-flex justify-content-center align-items-center p-3  p-4 " style="min-height: 85vh; ">
+                <div class="container d-flex justify-content-center align-items-center px-3  ">
                     <div class="shadow" style="width: 768px; min-width:450px; ">
                         <p class='h4 py-2 px-auto bg-dark border text-white mb-0 text-center'>เมนูแก้ไขข้อมูลสถานประกอบการ </p>
                         <?php
@@ -173,7 +180,11 @@
                         echo '<label for="workplace_address" class="form-label mt-1">ที่อยู่บริษัท</label>';
                         echo '<textarea class="form-control" name="workplace_address" rows="5"
                                 required>' . $workplace_address . '</textarea>';
-
+                        echo ' <div class="form-group">
+                                <label for="map">แผนที่</label>
+                                <input type="text" class="form-control" name="map" id="map" rows="4"
+                                    value="' . $map . '">
+                            </div>';
 
                         echo '<button type="submit" value="submit"
                                 class="mt-3 btn btn-success w-100">บันทึกการเปลี่ยนแปลง</button>';

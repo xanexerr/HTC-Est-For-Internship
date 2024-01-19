@@ -38,8 +38,10 @@ include "navbar.php";
                 <p class="h5">เบอร์โทร :
                     <?php echo $row['work_tel']; ?>
                 </p>
-                <a class="h4 btn btn-secondary" href="<?php echo $row['map']; ?>" target="_blank">ดูแผนที่สถานประกอบการ
-                </a>
+                <?php if ($row['map'] != '') { ?>
+                    <a class="h4 btn btn-secondary" href="<?php echo $row['map']; ?>" target="_blank">ดูแผนที่สถานประกอบการ
+                    </a>
+                <?php } ?>
                 <p class="h5">ที่อยู่ :
                     <?php echo $row['workplace_address']; ?>
                 </p>

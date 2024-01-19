@@ -9,15 +9,15 @@ include("header.php");
     <?php
     include("navbar.php");
     ?>
-    <div class="row container rounded d-flex mx-auto my-5 justify-content-center align-items-center p-3">
-        <div class="row container rounded d-flex justify-content-center align-items-center p-3" style="width: 768px;">
-            <div class="row g-0 border rounded overflow-hidden flex-md-row my-4 shadow-sm h-md-250">
+    <div class="row container rounded d-flex mx-auto my-4 justify-content-center align-items-center ">
+        <div class="row container rounded d-flex justify-content-center align-items-center" style="width: 768px;">
+            <div class="row g-0 border rounded overflow-hidden flex-md-row  shadow-sm h-md-250">
                 <div class="col-auto d-none d-lg-block">
                     <img src="img/xan.jpg" style="width: 200px; height: 300px; object-fit: cover" class="rounded-left">
                 </div>
-                <div class="rounded-right p-3" style="width: 350px; min-height: 200px;" name="form2" method="post">
-                    <h3 class="card-title" style="-webkit-text-stroke: 0.7px gray; -webkit-text-fill-color: black;">
-                        นายณัฐภูมินทร์ กล่ำมาตร</h3><br>
+                <div class="rounded-right px-5 p-4" style="width: 450px; min-height: 200px;" name="form2" method="post">
+                    <h3 class="card-title">
+                        นายณัฐภูมินทร์ กล่ำมาตย์</h3><br>
                     <p class="card-text">ข้อมูลติดต่อ</p>
                     <p class="card-text">EMAIL : tokjaiz01@gmail.com</p>
                     <p class="card-text">FACEBOOK : Thirapat Saetang</p>
@@ -30,8 +30,9 @@ include("header.php");
                     <img src="img/handsome.jpg" style="width: 200px; height: 300px; object-fit: cover"
                         class="rounded-left">
                 </div>
-                <div class="rounded-right p-3" style="width: 350px; min-height: 200px;" name="form4" method="post">
-                    <h3 class="card-title" style="-webkit-text-stroke: 0.7px gray; -webkit-text-fill-color: black;">
+                <div class="rounded-right px-5  p-4" style="width: 500px; min-height: 200px;" name="form4"
+                    method="post">
+                    <h3 class="card-title">
                         นายธีรภัทร แซ่ตั้ง</h3><br>
                     <p class="card-text">ข้อมูลติดต่อ</p>
                     <p class="card-text">EMAIL : tokjaiz01@gmail.com</p>
@@ -44,8 +45,9 @@ include("header.php");
                 <div class="col-auto d-none d-lg-block">
                     <img src="img/bas.jpg" style="width: 200px; height: 300px; object-fit: cover" class="rounded-left">
                 </div>
-                <div class="rounded-right p-3 " style="width: 350px; min-height: 200px;" name="form6" method="post">
-                    <h3 class="card-title" style="-webkit-text-stroke: 0.7px gray; -webkit-text-fill-color: black;">
+                <div class="rounded-right px-5  p-4 " style="width: 350px; min-height: 200px;" name="form6"
+                    method="post">
+                    <h3 class="card-title">
                         นายธนชาต นามเจริญ</h3><br>
                     <p class="card-text">ข้อมูลติดต่อ</p>
                     <p class="card-text">EMAIL : tokjaiz01@gmail.com</p>

@@ -30,7 +30,7 @@
     $commentData = $stmt->fetchAll(PDO::FETCH_ASSOC);
     ?>
     <div class="flex-container">
-        <div class="container ">
+        <div class="container p-0">
             <div class="my-3 bg-body  shadow">
                 <div class=" justify-content-center ">
                     <div class="border p-0 ">

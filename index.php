@@ -8,8 +8,8 @@ include 'navbar.php';
 <html lang="en">
 
 <body class="bg-white">
-    <div class="container rounded-top rounded-bottom shadow-sm p-0 my-3 border bg-white">
-        <div class="bg-body rounded-bottom  rounded">
+    <div class="container rounded-top rounded-bottom shadow-sm p-0  my-3  border bg-white">
+        <div class="bg-body rounded-0  rounded">
             <?php
 
             $limit = 12;
@@ -68,9 +68,7 @@ include 'navbar.php';
                 $workplacesData = $stmt->fetchAll(PDO::FETCH_ASSOC);
             }
             ?>
-
-
-            <!-- conternt tabel -->
+            <p class='h4 py-2 px-auto bg-dark  text-white mb-0 text-center '>รายชื่อสถานประกอบการ</p>
             <form class="m-0  col-12" method="GET">
 
                 <div class="input-group container  bg-secondary p-3  ">

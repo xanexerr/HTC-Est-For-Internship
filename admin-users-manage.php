@@ -13,11 +13,6 @@ include 'header.php';
 
 <body>
     <?php
-    require('connection.php');
-    include 'navbar.php';
-    include('php/admin-check.php');
-    ?>
-    <?php
     $updatestatus = "SELECT COUNT(*) FROM users";
     $stmt = $conn->query($updatestatus);
     $totalusers = $stmt->fetchColumn();
@@ -25,6 +20,9 @@ include 'header.php';
     ?>
 
     <?php
+    require('connection.php');
+    include 'navbar.php';
+    include('php/admin-check.php');
     $limit = 12;
     $stmt = $conn->prepare("SELECT COUNT(*) FROM users");
     $stmt->execute();
@@ -66,9 +64,8 @@ include 'header.php';
     $stmt->execute();
     $usersData = $stmt->fetchAll(PDO::FETCH_ASSOC);
     ?>
-
     <div class="flex-container">
-        <div class="container ">
+        <div class="container p-0">
             <div class="my-3 bg-body  shadow ">
                 <div class=" justify-content-center  ">
                     <div class="p-0 ">
@@ -79,17 +76,7 @@ include 'header.php';
 
                         <form class="m-0 rounded-top  rounded col-12" method="GET">
                             <div class="input-group container bg-secondary p-3 ">
-                                <div class="col-2">
-                                    <select class=" form-control  mx-2" name="work_type_filter"
-                                        onchange="this.form.submit()">
-                                        <option value="DESC" <?php if (isset($_GET['work_type_filter']) && $_GET['work_type_filter'] === 'DESC')
-                                            echo 'selected'; ?>>ลำดับ : มาก -> น้อย
-                                        </option>
-                                        <option value="ASC" <?php if (isset($_GET['work_type_filter']) && $_GET['work_type_filter'] === 'ASC')
-                                            echo 'selected'; ?>>ลำดับ : น้อย -> มาก
-                                        </option>
-                                    </select>
-                                </div>
+
 
                                 <input type="text" class="form-control " placeholder="ค้นหา...." name="search_query"
                                     value="<?php if (isset($search_query)) {
