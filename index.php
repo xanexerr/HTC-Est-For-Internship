@@ -8,7 +8,7 @@ include 'navbar.php';
 <html lang="en">
 
 <body class="bg-white">
-    <div class="container rounded-top rounded-bottom shadow-sm p-0  my-3  border bg-white">
+    <div class="container rounded-top rounded-bottom shadow-sm p-0  my-3  border bg-white col-12">
         <div class="bg-body rounded-0  rounded">
             <?php
 
@@ -72,31 +72,8 @@ include 'navbar.php';
             <form class="m-0  col-12" method="GET">
 
                 <div class="input-group container  bg-secondary p-3  ">
-                    <div class="col-2 me-2 ">
-                        <select class="form-control rounded-0 " name="sorting" onchange="this.form.submit()">
-                            <option value="newest">เรียงจากเพิ่มล่าสุด</option>
-                            <option value="highscore" <?php if (isset($_GET['sorting']) && $_GET['sorting'] === 'highscore')
-                                echo 'selected'; ?>>เรียงจากคะแนนรีวิว</option>
-                        </select>
-                    </div>
-        
-                    <input type="text" class="form-control rounded-0 px-3" placeholder="ค้นหาสถานประกอบการ...."
-                        name="search_query" value="<?php if (isset($search_query)) {
-                            echo $search_query;
-                        }
-                        ?>">
-
-
-                    <button class="btn btn-primary rounded-0  px-3 me-2 col-1" type="submit" style="font-size: 1em;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
-                            class="bi bi-search" viewBox="0 0 16 16" style="vertical-align: middle;">
-                            <path
-                                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                        </svg> Search
-                    </button>
-
                     <div class="col-2">
-                        <select class="form-control " name="work_type_filter" onchange="this.form.submit()">
+                        <select class="form-control rounded-0  rounded-start h-100 " name="work_type_filter" onchange="this.form.submit()">
                             <option value="">ประเภทงาน : ทั้งหมด</option>
                             <option value="เขียนโปรแกรม" <?php if (isset($_GET['work_type_filter']) && $_GET['work_type_filter'] === 'เขียนโปรแกรม')
                                 echo 'selected'; ?>>ประเภทงาน : เขียนโปรแกรม
@@ -113,8 +90,30 @@ include 'navbar.php';
                                 echo 'selected'; ?>>ประเภทงาน : ด้านบริการ
                             </option>
                         </select>
-
+                    
                     </div>
+                    <div class="col-2 me-2 ">
+                        <select class="form-control rounded-0 rounded-end h-100" name="sorting" onchange="this.form.submit()">
+                            <option value="newest">เรียงจากเพิ่มล่าสุด</option>
+                            <option value="highscore" <?php if (isset($_GET['sorting']) && $_GET['sorting'] === 'highscore')
+                                echo 'selected'; ?>>เรียงจากคะแนนรีวิว</option>
+                        </select>
+                    </div>
+        
+                    <input type="text" class="form-control rounded-0 px-3  rounded-start" placeholder="ค้นหาสถานประกอบการ...."
+                        name="search_query" value="<?php if (isset($search_query)) {
+                            echo $search_query;
+                        }
+                        ?>">
+                    <button class="btn btn-primary rounded-0  px-3 me-2 col-2 rounded-end" type="submit" style="font-size: 1em;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
+                            class="bi bi-search" viewBox="0 0 16 16" style="vertical-align: middle;">
+                            <path
+                                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                        </svg> ค้นหา
+                    </button>
+
+    
                 </div>
             </form>
 
@@ -211,9 +210,11 @@ include 'navbar.php';
     <!-- footer -->
     <?php
     include 'script.php';
-
-
     ?>
+<script>
+    addClassToElement("index");
+</script>
+
 </body>
 
 </html>

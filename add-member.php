@@ -26,7 +26,6 @@ include("header.php")
             }
         });';
         echo '</script>';
-
         exit();
     } else {
         if ($_SESSION["role"] !== 'admin' && $_SESSION["role"] !== 'teacher') {

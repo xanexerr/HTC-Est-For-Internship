@@ -110,17 +110,11 @@ include("header.php")
 
                             <button type="submit" value="submit"
                                 class="mt-3 btn btn-success w-100">บันทึกการเปลี่ยนแปลง</button>
-                            <a href="admin-wp.php" class="mt-1 btn btn-danger w-100">ยกเลิก</a>
+                            <a href="#" class="mt-1 btn-danger btn w-100"
+                                onclick="confirmDelete('<?php echo $row['workplace_id']; ?>')">ลบสถานประกอบการ</a>
+                            <a href="admin-wp.php" class="mt-1 btn btn-warning w-100">ยกเลิก</a>
                         </form>
-
-                        <div class="form-group">
-                            <label for="map">แผนที่</label>
-                            <input type="text" class="form-control" name="map" id="map" rows="4"
-                                value="<?php echo $row['map']; ?>">
-                        </div>
                     <?php endforeach; ?>
-
-
                 </div>
             </div>
         </div>
@@ -131,5 +125,23 @@ include("header.php")
     ?>
 
 </body>
+<script>
+    function confirmDelete(userId, admin) {
+        Swal.fire({
+            title: 'คุณแน่ใจหรือไม่?',
+            text: 'การลบสถานประกอบการนี้ไม่สามารถย้อนกลับได้!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'ใช่, ลบทันที!',
+            cancelButtonText: 'ยกเลิก'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = 'php/del-wp.php?id=' + encodeURIComponent(userId) + '&admin=' + encodeURIComponent(admin);
+            }
+        });
+    }
+</script>
 
 </html>

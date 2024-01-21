@@ -31,7 +31,7 @@ include("header.php");
     ?>
     <!-- content -->
 
-    <div class="flex-container">
+    <div class="flex-container ">
         <div class="container  px-0 border   shadow  my-3 col-md-10 bg-white">
             <p class='h4 py-2  bg-dark border text-white  mb-0 text-center  '>รายละเอียด </p>
             <div class="">
@@ -39,7 +39,6 @@ include("header.php");
                     <?php foreach ($userData as $row): ?>
                         <form class="border p-3" name="edit_workplace_form" method="POST" action="php/update-users.php"
                             enctype="multipart/form-data">
-
                             <label for="user_id" class="form-label">รหัสผู้ใช้</label>
                             <input type="hidden" class="form-control text-danger" name="old_user_id"
                                 value="<?php echo $row['user_id']; ?>">
@@ -67,6 +66,9 @@ include("header.php");
                                 } ?>>นักเรียน</option>
                             </select>
 
+                            <label for="user_lname" class="form-label mt-1">รหัสผ่าน</label>
+                            <input type="password" class="form-control" name="password"
+                                value="<?php echo $row['password']; ?>" required>
 
                             <button type="submit" value="submit"
                                 class="mt-3 btn btn-success w-100">บันทึกการเปลี่ยนแปลง</button>

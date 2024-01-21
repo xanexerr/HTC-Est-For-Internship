@@ -55,22 +55,12 @@
                     <div class="border p-0 ">
                         <p class='h4 py-2 px-auto bg-dark text-white mb-0 text-center '>
                             เมนูแก้ไขข้อมูลสถานประกอบการ </p>
-                        <form class="m-0 " method="GET">
+                        <form class="m-0 rounded-0 " method="GET">
+
                             <div class="input-group container  bg-secondary p-3 ">
-                                <input type="text" class="form-control rounded px-3"
-                                    placeholder="ค้นหาสถานประกอบการ...." name="search_query" value="<?php if (isset($search_query)) {
-                                        echo $search_query;
-                                    }
-                                    ?>">
-                                <button class="btn btn-primary rounded px-3 mx-2" type="submit" style="font-size: 1em;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
-                                        class="bi bi-search" viewBox="0 0 16 16" style="vertical-align: middle;">
-                                        <path
-                                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                                    </svg> Search
-                                </button>
-                                <div class="col-xs-2 ">
-                                    <select class="form-control" name="work_type_filter" onchange="this.form.submit()">
+                                <div class="col col-lg-2 col-md-auto ">
+                                    <select class="form-control rounded-0  h-100 rounded-start " name="work_type_filter"
+                                        onchange="this.form.submit()">
                                         <option value="">ประเภทงานทั้งหมด</option>
                                         <option value="เขียนโปรแกรม" <?php if (isset($_GET['work_type_filter']) && $_GET['work_type_filter'] === 'เขียนโปรแกรม')
                                             echo 'selected'; ?>>ประเภทงานเขียนโปรแกรม
@@ -88,14 +78,26 @@
                                         </option>
                                     </select>
                                 </div>
-
+                                <input type="text" class="form-control rounded-0 " placeholder="ค้นหาสถานประกอบการ...."
+                                    name="search_query" value="<?php if (isset($search_query)) {
+                                        echo $search_query;
+                                    }
+                                    ?>">
+                                <button class="btn btn-primary rounded-0 px-3 col-2 rounded-end" type="submit"
+                                    style="font-size: 1em;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
+                                        class="bi bi-search d-md-inline" viewBox="0 0 16 16"
+                                        style="vertical-align: middle;">
+                                        <path
+                                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                    </svg>
+                                    ค้นหา
+                                </button>
                             </div>
                         </form>
-
                         <div class="col  text-center bg-dark px-4 mx-auto">
                             <a href="admin-add-form.php" class="text-white btn btn-none ">เพิ่มสถานประกอบการ</a>
                         </div>
-
                         <div class="px-4">
                             <div class="">
                                 <p class="fs-5 rounded p-1 px-3 m-0 form-control border-0 text-center">
@@ -203,6 +205,9 @@
     <?php
     include "script.php";
     ?>
+    <script>
+        addClassToElement("wmanage");
+    </script>
 </body>
 
 </html>

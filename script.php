@@ -9,14 +9,24 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
     integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
     crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
 <script>
     function updateItemsPerPage(select) {
         var selectedValue = select.value;
         window.location.href = window.location.pathname + '?itemsPerPage=' + selectedValue;
     }
+    function addClassToElement(elementId) {
+        var element = document.getElementById(elementId);
+        if (element) {
+            element.classList.add("disabled");
+        }
+    }
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCto2bb-WrV5qIsfUWRpdTYCsi-0VzvDys&libraries=places"
-    defer></script>
+
+
 
 
 <?php

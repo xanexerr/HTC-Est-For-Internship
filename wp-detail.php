@@ -19,8 +19,6 @@ include "navbar.php";
     $mapdata = '7.001266781370485, 100.47979575236882';
     ?>
     <div class="container  px-0 border   shadow rounded my-3 w-75">
-
-
         <p class='h4 py-2  bg-dark border text-white  mb-0 text-center  rounded-top'>รายละเอียด </p>
         <div class="p-5 ">
 
@@ -61,20 +59,15 @@ include "navbar.php";
                     <label class="h4 m-0">
                         คะแนนรีวิว :
                         <?php
-                        // Assuming $row['rating'] holds the rating value
                         if (isset($row['rating'])) {
                             $rating = $row['rating'];
                             if ($rating > 0) {
                                 echo "$rating" . "/5";
                             }
-                            // Check if $rating is numeric and not empty before using str_repeat
                             if (is_numeric($rating) && $rating !== '') {
-                                // Convert $rating to an integer to ensure it's a whole number
                                 $rating = (int) $rating;
                                 ?>
                                 <?php
-
-                                // Output stars based on the rating
                                 echo '<div class="h4 my-2">' .
                                     str_repeat("⭐", $rating) . '
                             </div>';
@@ -99,12 +92,25 @@ include "navbar.php";
 
                             }
                             ?>
-
                         </div>
                 </div>
             </div>
-
-
+            <?php
+            $stmt_userwp = $connection->prepare("SELECT workplace_id FROM users WHERE user_id = ?");
+            $stmt_userwp->bind_param("s", $user_id);
+            $stmt_userwp->execute();
+            $stmt_userwp = $stmt_userwp->get_result();
+            $wpresult = $stmt_userwp->fetch_assoc();
+            $workplace_id = $wpresult["workplace_id"];
+            if ($workplace_id === null) { ?>
+                <form class="p-3" name="select_workplace_form" method="POST" action="php/update-wp-select.php"
+                    enctype="multipart/form-data">
+                    <input type="hidden" name="workplace" value="<?php echo $row['workplace_id'] ?>" ?>
+                    <button type=" submit" value="submit" class="mt-3 btn btn-success w-100">เลือก
+                        <?php echo $row['workplace_name'] ?> เป็นสถานประกอบการของฉัน
+                    </button>
+                </form>
+            <?php } ?>
         </div>
         <div class="col-sm-8"></div>
 
@@ -112,9 +118,6 @@ include "navbar.php";
         </div>
 
         </div>
-
-
-
         </div>
     <?php endforeach ?>
     </div>

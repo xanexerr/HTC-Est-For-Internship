@@ -30,14 +30,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["std_comment"])) {
         echo "<script>
                 alert('แก้ไขข้อมูลสำเร็จ!');
                 window.location.href = '../index.php';
-              </script>";
+                </script>";
         exit();
 
     } else {
         echo "Failed to prepare the SQL statement.";
     }
-
 }
 $connection->close();
-
 ?>

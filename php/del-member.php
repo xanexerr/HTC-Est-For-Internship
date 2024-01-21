@@ -10,8 +10,7 @@
 
 <body>
     <?php
-    require_once('../connection.php'); // Ensure the connection is established
-    
+    require_once('../connection.php');
     session_start();
     if (!isset($_SESSION["user_id"])) {
         echo '<script>';
@@ -47,28 +46,46 @@
     }
 
     $user_id = $_GET['id'];
+    $stmtCheck = $conn->prepare("SELECT COUNT(*) FROM comments WHERE user_id = ?");
+    $stmtCheck->bindParam(1, $user_id);
+    $stmtCheck->execute();
+    $commentsCount = $stmtCheck->fetchColumn();
 
-    $stmt = $conn->prepare("DELETE FROM users WHERE user_id = ?");
-    $stmt->bindParam(1, $user_id);
-    if ($stmt->execute()) {
-        echo "<script>
+    if ($commentsCount > 0) {
+        // If there are related comments, handle accordingly
+        echo '<script>';
+        echo 'Swal.fire({
+        title: "ไม่สามารถลบบัญชีได้!",
+        text: "เนื่องจากบัญชีนี้ได้ทำการเพิ่มข้อมูลต่างๆ สู่เว็บไซต์",
+        icon: "error",
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "OK"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = "../admin-users-manage.php";
+        }
+    });';
+        echo '</script>';
+    } else {
+        $stmtdeletewp = $conn->prepare("DELETE FROM users WHERE user_id = ?");
+        $stmtdeletewp->bindParam(1, $user_id);
+
+        if ($stmtdeletewp->execute()) {
+            echo "<script>
             Swal.fire('Success', 'ลบมูลสำเร็จ!', 'success').then(function() {
                 window.location.href = '../admin-users-manage.php';
             });
         </script>";
-    } else {
-        $errorMessage = "มีข้อผิดพลาดในการลบข้อมูล : " . $stmt->errorInfo()[2];
-        echo 'Swal.fire({ title: "' . $errorMessage . '", icon: "error" });';
+        } else {
+            $errorMessage = "มีข้อผิดพลาดในการลบข้อมูล : " . $stmtdeletewp->errorInfo()[2];
+            echo 'Swal.fire({ title: "' . $errorMessage . '", icon: "error" });';
+        }
     }
 
-    // Close the statement and the database connection
-    $stmt = null;
+    $stmtCheck = null;
+    $stmtdeletewp = null;
     $conn = null;
     ?>
-
-
-
-
 </body>
 
 </html>

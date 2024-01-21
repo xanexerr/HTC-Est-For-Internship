@@ -71,26 +71,21 @@ include 'header.php';
                     <div class="p-0 ">
                         <p class='h4 py-2 px-auto bg-dark  text-white mb-0 text-center '>
                             ข้อมูลผู้ใช้ทั้งหมด </p>
-
-
-
-                        <form class="m-0 rounded-top  rounded col-12" method="GET">
+                        <form class="m-0 rounded-top  rounded-0 col-12" method="GET">
                             <div class="input-group container bg-secondary p-3 ">
-
-
-                                <input type="text" class="form-control " placeholder="ค้นหา...." name="search_query"
-                                    value="<?php if (isset($search_query)) {
+                                <input type="text" class="form-control  rounded-0 rounded-start" placeholder="ค้นหา...."
+                                    name="search_query" value="<?php if (isset($search_query)) {
                                         echo $search_query;
                                     }
                                     ?>">
-                                <button class="btn btn-primary rounded-end px-3 mr-2 col-1" type="submit"
+                                <button class="btn btn-primary rounded-0 px-3 mr-2 col-2 rounded-end" type="submit"
                                     style="font-size: 1em;">
 
                                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
                                         class="bi bi-search" viewBox="0 0 16 16" style="vertical-align: middle;">
                                         <path
                                             d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                                    </svg> Search
+                                    </svg> ค้นหา
                                 </button>
                             </div>
                     </div>
@@ -207,6 +202,9 @@ include 'header.php';
     <?php
     include "script.php";
     ?>
+    <script>
+        addClassToElement("amanage");
+    </script>
 </body>
 
 </html>

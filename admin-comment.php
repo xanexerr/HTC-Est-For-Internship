@@ -53,7 +53,8 @@
                                                     <th class='col-2'>รหัสสถานประกอบการ</th>
                                                     <th class='col-4'>ความคิดเห็น</th>
                                                     <th class='col-2'>เวลาแสดงความคิดเห็น</th>
-                                                    <th class='col-2'>จัดการ/สถานะ</th>
+                                                    <th class='col-1'>จัดการ</th>
+                                                    <th class='col-1'>สถานะ</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -73,16 +74,16 @@
                                                             <?php echo $row['comment_time']; ?>
                                                         </td>
                                                         <td class="text-center">
-                                                            <div class="btn-group  ">
-
+                                                            <div class="btn-group ">
                                                                 <a href="php/show-status.php?comment_id=<?php echo $row['comment_id']; ?>"
-                                                                    class="btn btn-warning">แก้ไขสถานะ</a>
-                                                                <?php if ($row['show'] == '1'): ?>
-                                                                    <a class='btn btn-success'>แสดง</a>
-                                                                <?php else: ?>
-                                                                    <a class='btn btn-danger'>ไม่แสดง</a>
-                                                                <?php endif; ?>
+                                                                    class="btn btn-sm btn-warning">แก้ไขสถานะ</a>
                                                             </div>
+                                                        </td>
+                                                        <td class="text-center <?php echo ($row['show'] == 1) ? ' bg-success text-white' : 'bg-danger text-white'; ?>"
+                                                            style="vertical-align: middle;">
+                                                            <p class="m-0">
+                                                                <?php echo ($row['show'] == 1) ? 'แสดง' : 'ไม่แสดง'; ?>
+                                                            </p>
                                                         </td>
 
                                                     </tr>
@@ -138,6 +139,9 @@
     <?php
     include "script.php";
     ?>
+    <script>
+        addClassToElement("cmtmanage");
+    </script>
 </body>
 
 </html>

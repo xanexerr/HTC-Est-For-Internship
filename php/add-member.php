@@ -13,7 +13,7 @@
     require_once('../connection.php');
     session_start();
 
-    if (!isset($_SESSION["username"])) {
+    if (!isset($_SESSION["user_id"])) {
         echo '<script>
             Swal.fire({
                 title: "คุณยังไม่ได้เข้าสู่ระบบ",
@@ -26,7 +26,7 @@
             });
         </script>';
         exit();
-    } else if ($_SESSION["role"] !== 'librarian' && $_SESSION["role"] !== 'admin') {
+    } else if ($_SESSION["role"] !== 'admin') {
         echo '<script>
             Swal.fire({
                 title: "คุณไม่มีสิทธิเข้าถึง!",
@@ -67,15 +67,14 @@
                 });
             </script>';
         } else {
-            $stmt = $conn->prepare("INSERT INTO users (user_fname, user_lname, username, role, user_id) VALUES (?, ?, ?, ?, ?)");
+            $stmt = $conn->prepare("INSERT INTO users (user_fname, user_lname, username,password, role, user_id) VALUES (?, ?, ?, ?, ?, ?)");
 
             $stmt->bindParam(1, $user_fname);
             $stmt->bindParam(2, $user_lname);
             $stmt->bindParam(3, $username);
-            $stmt->bindParam(4, $user_type);
-            $stmt->bindParam(5, $username);
-
-
+            $stmt->bindParam(4, $username);
+            $stmt->bindParam(5, $user_type);
+            $stmt->bindParam(6, $username);
 
             if ($stmt->execute()) {
                 $location = ($_SESSION['role'] == 'admin') ? '../admin-users-manage.php' : '../admin-users-manage.php';

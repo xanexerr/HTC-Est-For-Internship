@@ -20,7 +20,7 @@ include 'header.php';
     ?>
     <div class="flex-container">
         <div class="container ">
-            <div class="my-3 bg-body  shadow  w-75  mx-auto">
+            <div class="my-3 bg-body shadow mx-auto col-6 ">
                 <div class=" justify-content-center">
                     <p class='h4 py-2 px-auto bg-dark text-white mb-0 text-center '>
                         แก้ไขข้อมูลส่วนตัว </p>
@@ -49,9 +49,8 @@ include 'header.php';
                             <div class="d-flex align-items-center">
                                 <input type="password" class="form-control " name="password" id="passwordField"
                                     value="<?= $row['password']; ?>" required>
-                                <a class="btn btn-secondary rounded col-1" type="button" id="showPasswordBtn"></a>
+                                <a class="btn btn-secondary rounded" type="button" id="showPasswordBtn"></a>
                             </div>
-
 
                             <button type="submit" value="submit"
                                 class="mt-3 btn btn-success w-100">บันทึกการเปลี่ยนแปลง</button>
@@ -68,6 +67,10 @@ include 'header.php';
         </div>
     </div>
     <?php include 'script.php'; ?>
+    <script>
+        addClassToElement("profile");
+    </script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const passwordField = document.getElementById('passwordField');

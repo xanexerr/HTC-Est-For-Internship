@@ -20,18 +20,13 @@
             $stmt_usercomment->bind_result($nowuser_id, $nowuser_fname, $nowuser_lname);
             $stmt_usercomment->fetch();
             $stmt_usercomment->close();
-
             $_SESSION["nowuser_fname"] = $nowuser_fname;
             $_SESSION["nowuser_lname"] = $nowuser_lname;
-
-
-
-            echo '<div class="border shadow w-50 rounded-3 " style="min-width: 450px;">';
+            echo '<div class="border shadow w-50 rounded-3 ">';
             echo '<div class="d-grid gap-2">';
             echo '<div class="text-center">';
             echo '<p class="h3 py-3 bg-dark border text-white  mb-0 text-center  rounded-top">เข้าสู่ระบบอยู่แล้ว!!</p>
                     <div class="p-4">';
-
             echo "<h4 class='ml-3 pt-3'>รหัสนักศึกษา</h4><br>";
             echo "<h5 class='text-primary'>$nowuser_id</h5><br>";
 
@@ -49,8 +44,7 @@
             echo '</div>';
         } else {
             echo '
-
-                <form class="border shadow rounded" style="min-width: 450px; width:768px;" name="form1" method="post" action="check_login.php">
+                <form class="border shadow rounded w-50"  name="form1" method="post" action="check_login.php">
                     <p class="h4 py-2  bg-dark border text-white  mb-0 text-center  rounded-top">เข้าสู่ระบบ</p>
                     <div class="p-4">
                     
@@ -66,11 +60,11 @@
                     </div>
         
                     <div class="d-grid gap-2 pt-3">
-                        <button type="submit" class="btn btn-success btn-lg d-grid gap-2">เข้าสู่ระบบ</button>
+                        <button type="submit" class="btn btn-success btn d-grid gap-2">เข้าสู่ระบบ</button>
                     </div>
                     <div class="d-grid gap-1 pt-1">
                    <!-- <a href="#" class="btn  btn-warning btn-lg d-grid ">ลงทะเบียน</a> -->
-                        <a href="index.php" class="btn btn-danger btn-lg d-grid ">ยกเลิก</a>
+                        <a href="index.php" class="btn btn-danger btn d-grid ">ยกเลิก</a>
                     </div>
                     </div>
                 </form>

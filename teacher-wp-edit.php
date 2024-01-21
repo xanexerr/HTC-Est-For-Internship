@@ -59,8 +59,8 @@ include("header.php")
     <!-- content -->
 
     <div class="flex-container">
-        <div class="container  px-0 border   shadow rounded my-3 col-md-10">
-            <p class='h4 py-2  bg-dark border text-white  mb-0 text-center  rounded-top '>รายละเอียด </p>
+        <div class="container  px-0 border   shadow  my-3 col-md-10 w-50">
+            <p class='h4 py-2  bg-dark border text-white  mb-0 text-center   '>รายละเอียด </p>
             <div class="">
                 <div class="">
                     <?php foreach ($workplacesData as $row): ?>
@@ -115,7 +115,7 @@ include("header.php")
 
                             <button type="submit" value="submit"
                                 class="mt-3 btn btn-success w-100">บันทึกการเปลี่ยนแปลง</button>
-                            <a href="admin-wp.php" class="mt-1 btn btn-danger w-100">ยกเลิก</a>
+                            <a href="teacher-wp.php" class="mt-1 btn btn-danger w-100">ยกเลิก</a>
                         </form>
 
                     <?php endforeach; ?>

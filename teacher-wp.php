@@ -23,24 +23,20 @@ include 'header.php';
     $workplacesData = $stmt->fetchAll(PDO::FETCH_ASSOC);
     ?>
     <div class="flex-container">
-        <div class="container vh-100 ">
+        <div class="container px-0 vh-100 ">
             <div class="my-3 bg-body  shadow">
                 <div class=" justify-content-center ">
                     <div class="border p-0 ">
                         <p class='h4 py-2 px-auto bg-dark text-white mb-0 text-center '>
                             จัดการสถานประกอบการของฉัน</p>
-
-
                         <div class="col  text-center bg-warning px-4 mx-auto">
-                            <a href="teacher-add-form.php" class=" btn btn-none border-dark">เพิ่มสถานประกอบการ</a>
+                            <a href="teacher-add-form.php" class=" btn btn-none">เพิ่มสถานประกอบการ</a>
                         </div>
-
-                        <div class="px-4">
-
+                        <div class="">
                             <div class="col">
                                 <div class="table-responsive">
                                     <?php if ($totalWorkplaces > 0) { ?>
-                                        <table class="table table-bordered table-sm m-0">
+                                        <table class="table table-hover mb-0">
                                             <thead>
                                                 <tr class="text-center text-light bg-dark col-12">
                                                     <th class='col-1'>#</th>
@@ -85,17 +81,15 @@ include 'header.php';
                                     <?php } else {
                                         echo "<script src='path/to/sweetalert.min.js'></script>";
                                         echo "<script>
-            Swal.fire({
+                Swal.fire({
                 icon: 'info',
                 title: 'ไม่พบข้อมูลสถานประกอบการ',
                 showConfirmButton: true,
                 onClose: () => {
-                    // Additional code to run when the alert is closed (if needed)
                 }
             });
             </script>";
                                         ?>
-
                                     <?php } ?>
                                 </div>
                             </div>
@@ -136,6 +130,9 @@ include 'header.php';
             </div>
         </div>
         <?php include 'script.php'; ?>
+        <script>
+            addClassToElement("tmanage");
+        </script>
 </body>
 
 </html>
