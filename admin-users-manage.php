@@ -65,7 +65,7 @@ include 'header.php';
     $usersData = $stmt->fetchAll(PDO::FETCH_ASSOC);
     ?>
     <div class="flex-container">
-        <div class="container p-0">
+        <div class="container p-0 vh-100">
             <div class="my-3 bg-body  shadow ">
                 <div class=" justify-content-center  ">
                     <div class="p-0 ">

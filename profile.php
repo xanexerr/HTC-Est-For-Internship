@@ -18,8 +18,8 @@ include 'header.php';
     // Fetch the user data
     $userData = $stmt->fetchAll(PDO::FETCH_ASSOC);
     ?>
-    <div class="flex-container">
-        <div class="container ">
+    <div class="flex-container vh-100">
+        <div class="container">
             <div class="my-3 bg-body shadow mx-auto col-6 ">
                 <div class=" justify-content-center">
                     <p class='h4 py-2 px-auto bg-dark text-white mb-0 text-center '>
@@ -49,7 +49,7 @@ include 'header.php';
                             <div class="d-flex align-items-center">
                                 <input type="password" class="form-control " name="password" id="passwordField"
                                     value="<?= $row['password']; ?>" required>
-                                <a class="btn btn-secondary rounded" type="button" id="showPasswordBtn"></a>
+                                <a class="btn btn-outline-secondary rounded col-2" type="button" id="showPasswordBtn"></a>
                             </div>
 
                             <button type="submit" value="submit"
@@ -59,7 +59,7 @@ include 'header.php';
                                 echo 'admin-users-manage.php';
                             } else {
                                 echo 'index.php';
-                            } ?>" class="mt-1 btn btn-warning w-100">ยกเลิก</a>
+                            } ?>" class="mt-1 btn btn-secondary w-100">ยกเลิก</a>
                         </form>
                     <?php endforeach; ?>
                 </div>

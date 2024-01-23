@@ -21,14 +21,14 @@
         confirmButtonText: "OK"
         }).then((result) => {
             if (result.isConfirmed) {
-                window.location.href = "login.php";
+                window.location.href = "../login.php";
             }
         });';
         echo '</script>';
 
         exit();
     } else {
-        if ($_SESSION["role"] !== 'admin') {
+        if ($_SESSION["role"] !== 'admin' && $_SESSION["role"] !== 'teacher') {
             echo '<script>';
             echo 'Swal.fire({
             title: "คุณไม่มีสิทธิเข้าถึง!",
@@ -37,7 +37,7 @@
             confirmButtonText: "OK"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = "index.php";
+                    window.location.href = "../index.php";
                 }
             });';
             echo '</script>';
@@ -65,15 +65,29 @@
     });';
         echo '</script>';
     } else {
+        $stmtdeleteuser = $conn->prepare("UPDATE users SET workplace_id = null WHERE workplace_id = ?");
+        $stmtdeleteuser->bindParam(1, $workplace_id);
+        $stmtdeleteuser->execute();
+
         $stmtdeletewp = $conn->prepare("DELETE FROM workplaces WHERE workplace_id = ?");
         $stmtdeletewp->bindParam(1, $workplace_id);
+        $stmtdeletewp->execute();
+
 
         if ($stmtdeletewp->execute()) {
-            echo "<script>
+            if ($_SESSION['role'] == 'admin') {
+                echo "<script>
             Swal.fire('Success', 'ลบมูลสำเร็จ!', 'success').then(function() {
                 window.location.href = '../admin-users-manage.php';
             });
         </script>";
+            } else {
+                echo "<script>
+            Swal.fire('Success', 'ลบมูลสำเร็จ!', 'success').then(function() {
+                window.location.href = '../teacher-wp.php';
+            });
+        </script>";
+            }
         } else {
             $errorMessage = "มีข้อผิดพลาดในการลบข้อมูล : " . $stmtdeletewp->errorInfo()[2];
             echo 'Swal.fire({ title: "' . $errorMessage . '", icon: "error" });';

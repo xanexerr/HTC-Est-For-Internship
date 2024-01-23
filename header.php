@@ -17,11 +17,30 @@
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css">
     <link href="css/custom.css" rel="stylesheet" crossorigin="anonymous">
+    <style>
+        /* Style the gallery container */
+        .image-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        /* Style each image in the gallery */
+        .gallery-image {
+            width: 150px;
+            height: 100px;
+            margin: 10px;
+            object-fit: cover;
+        }
+    </style>
 </head>
 
 <?php
 session_start();
 require 'connection.php';
+
 echo '<div class="bg-primary">';
 echo '<div class="container d-flex flex-wrap justify-content-center py-3  mx-auto border-none text-white bg-primary px-3">';
 echo '<a  class="d-flex align-items-center  mb-md-0 me-md-auto link-body-emphasis text-decoration-none">

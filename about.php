@@ -9,7 +9,7 @@ include("header.php");
     include("navbar.php");
     ?>
     <div
-        class="row flex-lg-row container rounded d-flex  mx-auto my-4 justify-content-evenly align-items-center  flex-md-column flex-column">
+        class="row flex-lg-row container rounded d-flex  mx-auto my-4 justify-content-evenly align-items-center  flex-md-column flex-column  vh-100">
         <div class="card col-lg-3 p-0 mb-4" style="height: fit-content; ">
             <img class="rounded-top" src="img/xan.jpg" alt="sand"
                 style="width:100%; aspect-ratio: 3.6/4; object-fit:cover" />
@@ -52,7 +52,7 @@ include("header.php");
             <div class="card-text text-center d-inline mx-auto mb-3">
                 <p class="card-text mb-0">ข้อมูลติดต่อ</p>
                 <a class="text-dark fs-3  px-1" href="https://www.facebook.com/thanachart.namcharoen"
-                    aria-label="facebook">
+                    aria-label="facebook" target="_blank">
                     <i class="fa-brands fa-facebook"></i></a>
             </div>
 

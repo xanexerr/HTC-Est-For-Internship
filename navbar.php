@@ -1,8 +1,25 @@
 <?php
+
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+}
+$stmt_userwp = $connection->prepare("SELECT workplace_id FROM users WHERE user_id = ?");
+$stmt_userwp->bind_param("s", $user_id);
+$stmt_userwp->execute();
+$result_userwp = $stmt_userwp->get_result();
+$wpresult = $result_userwp->fetch_assoc();
+
+if ($wpresult && $wpresult['workplace_id'] !== null) {
+    $workplace_id = $wpresult['workplace_id'];
+}
+?>
+<?php
+
 function displayLoggedInHeader($nowuser_fname, $nowuser_lname, $role, $nowwp_id)
-{ ?>
+{
+    ?>
     <nav class="navbar navbar-expand-sm navbar-expand-lg navbar-dark bg-dark">
-        <div class="container ">
+        <div class="container">
             <a class="navbar-toggler mx-3" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -10,38 +27,44 @@ function displayLoggedInHeader($nowuser_fname, $nowuser_lname, $role, $nowwp_id)
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
-                        <a class="nav-link btn   text-white px-3 " id="index" href="index.php">หน้าแรก</a>
+                        <a class="nav-link btn text-white px-3" id="index" href="index.php">หน้าแรก</a>
                     </li>
-                    <?php
-                    if ($_SESSION['role'] == "admin") { ?>
-                        <div class="">
+
+                    <?php if ($_SESSION['role'] == "admin"): ?>
+                        <div class="nav-item">
                             <a href="admin-users-manage.php" id="amanage"
                                 class="nav-link btn text-white px-3">ระบบจัดการบัญชีผู้ใข้</a>
                         </div>
-                        <div class="">
+                        <div class="nav-item">
                             <a href="admin-wp.php" id="wmanage" class="nav-link btn text-white px-3">ระบบจัดสถานประกอบการ</a>
                         </div>
-                        <div class="">
+                        <div class="nav-item">
                             <a href="admin-comment.php" id="cmtmanage"
-                                class="nav-link btn  text-white px-3">ระบบจัดการความคิดเห็น</a>
+                                class="nav-link btn text-white px-3">ระบบจัดการความคิดเห็น</a>
                         </div>
-                    <?php } ?>
-                    <?php if ($_SESSION['role'] == "teacher") { ?>
-                        <div class="">
+                    <?php endif; ?>
+
+                    <?php if ($_SESSION['role'] == "teacher"): ?>
+                        <div class="nav-item">
                             <a href="teacher-wp.php" id="tmanage" class="nav-link btn text-white px-3">จัดการสถานประกอบการ</a>
                         </div>
-                    <?php } ?>
-                    <?php if ($_SESSION['role'] == "student") { ?>
-                        <li class="">
+                    <?php endif; ?>
+
+                    <?php if ($_SESSION['role'] == "student"): ?>
+                        <li class="nav-item">
                             <a href="std-wp-edit.php" id="std-edit"
-                                class="nav-link btn  text-white  px-3">ข้อมูลสถานประกอบการของคุณ</a>
+                                class="nav-link btn text-white px-3">ข้อมูลสถานประกอบการของคุณ</a>
                         </li>
-                    <?php } ?>
+                                
+
+
+                    <?php endif; ?>
+
                     <li class="nav-item">
-                        <a class="nav-link btn text-white  px-3" id="profile" href="profile.php">ข้อมูลส่วนตัว</a>
+                        <a class="nav-link btn text-white px-3" id="profile" href="profile.php">ข้อมูลส่วนตัว</a>
                     </li>
-                    <li class="">
-                        <a href="about.php" id="about" class=" nav-link btn text-white  px-3">ติดต่อแอดมิน</a>
+                    <li class="nav-item">
+                        <a href="about.php" id="about" class="nav-link btn text-white px-3">ติดต่อแอดมิน</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link btn btn-danger text-white px-3" href="logout.php">ออกจากระบบ</a>
@@ -50,7 +73,11 @@ function displayLoggedInHeader($nowuser_fname, $nowuser_lname, $role, $nowwp_id)
             </div>
         </div>
     </nav>
-<?php } ?>
+    <?php
+}
+?>
+
+
 <?php function displayLoggedOutHeader()
 { ?>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -67,7 +94,8 @@ function displayLoggedInHeader($nowuser_fname, $nowuser_lname, $role, $nowwp_id)
                     <a href="about.php" id="about" class=" nav-link btn text-white  px-3">ติดต่อแอดมิน</a>
                 </li>
                 <li class="">
-                    <a href="login.php" class="nav-link p-2 px-3 btn btn-success text-white  mx-1">เข้าสู่ระบบ</a>
+                    <a href="login.php" id="login"
+                        class="nav-link p-2 px-3 btn btn-success text-white  mx-1">เข้าสู่ระบบ</a>
                 </li>
             </ul>
         </div>

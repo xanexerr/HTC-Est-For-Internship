@@ -1,33 +1,66 @@
-<?php
-session_start();
+<!DOCTYPE html>
+<html lang="en">
 
-// Check if the form was submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.0"></script>
+</head>
 
-    require '../connection.php';
-    $user_id = $_SESSION['user_id'];
+<body>
+    <?php
+    session_start();
 
-    $workplace_id = $_POST['workplace'];
+    // Check if the form was submitted
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
+        require '../connection.php';
+        $user_id = $_SESSION['user_id'];
 
-    // Prepare and execute your SQL UPDATE query
-    $updatestatus = "UPDATE users
+        $workplace_id = $_POST['workplace'];
+
+        // Prepare and execute your SQL UPDATE query
+        $updatestatus = "UPDATE users
             SET workplace_id = '$workplace_id'
             WHERE user_id = '$user_id'";
 
-    // Execute the query
-    if ($connection->query($updatestatus) === TRUE) {
-        echo "<script>
-                alert('แก้ไขข้อมูลสำเร็จ!');
-                window.location.href = '../index.php';
+        // Execute the query
+        if ($connection->query($updatestatus) === TRUE) {
+            echo "<script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'แก้ไขข้อมูลสำเร็จ!',
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(function() {
+                    window.location.href = '../index.php';
+                });
               </script>";
-        exit();
+            exit();
+        } else {
+            // Handle errors
+            echo "<script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'เกิดข้อผิดพลาด',
+                    text: 'เกิดข้อผิดพลาด : " . $connection->error . "',
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+              </script>";
+        }
     } else {
-        // Handle errors
-        echo "เกิดข้อผิดพลาด : " . $connection->error;
+        // Handle if the form was not submitted
+        echo "<script>
+            Swal.fire({
+                icon: 'error',
+                title: 'เกิดข้อผิดพลาด',
+                text: 'Form not submitted!',
+                showConfirmButton: false,
+                timer: 3000
+            });
+          </script>";
     }
-} else {
-    // Handle if the form was not submitted
-    echo "Form not submitted!";
-}
-?>
+    ?>
+</body>
+
+</html>

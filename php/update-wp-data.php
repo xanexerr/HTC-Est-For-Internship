@@ -12,19 +12,16 @@
     session_start();
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        require '../connection.php'; // Connect to the database
-    
-        // Assume $connection is the mysqli connection object
-    
-        $user_id = $_SESSION['user_id'];
+        require '../connection.php';
 
+        $user_id = $_SESSION['user_id'];
         $workplace_name = $_POST['workplace_name'];
         $work_type = $_POST['work_type'];
         $description = $_POST['description'];
         $work_tel = $_POST['work_tel'];
         $workplace_address = $_POST['workplace_address'];
         $map = $_POST['map'];
-        // Prepare the UPDATE statement using placeholders
+
         $updatestatus = "UPDATE workplaces
             SET workplace_name = ?,
                 work_type = ?,
@@ -33,14 +30,8 @@
                 workplace_address = ?,
                 map = ?
             WHERE user_id = ?";
-
-        // Prepare the statement
         $stmt = $connection->prepare($updatestatus);
-
-        // Bind parameters
         $stmt->bind_param("ssssssi", $workplace_name, $work_type, $description, $work_tel, $workplace_address, $map, $user_id);
-
-        // Execute the statement
         if ($stmt->execute()) {
             echo "<script>
             Swal.fire('Success', 'แก้ไขข้อมูลสำเร็จ!', 'success').then(function() {
@@ -56,7 +47,6 @@
         </script>";
         }
     } else {
-        // Handle if the form was not submitted
         echo "Form not submitted!";
     }
     ?>

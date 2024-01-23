@@ -8,56 +8,84 @@ include 'navbar.php';
 <html lang="en">
 
 <body class="bg-white">
-    <div class="container rounded-top rounded-bottom shadow-sm p-0  my-3  border bg-white col-12">
+    <div class="container rounded-top rounded-bottom shadow p-0  my-3  border bg-white col-12">
         <div class="bg-body rounded-0  rounded">
             <?php
-
             $limit = 12;
+            if (isset($_GET['sorting'])) {
+                $sorting = ($_GET['sorting']);
+                if ($sorting == 'highscore') {
+                    $sort = "ORDER BY `rating` DESC";
+                } elseif ($sorting == 'newest') {
+                    $sort = "ORDER BY `workplace_id` DESC";
+                } else {
+                    $sort = "ORDER BY `workplace_id` DESC";
+                }
 
             if (isset($_GET['search_query'])) {
                 $search_query = $_GET['search_query'];
-                $work_type_filter = ($_GET['work_type_filter']);
-                $sorting = ($_GET['sorting']);
-                if ($sorting == 'highscore'){
-                    $sort = "ORDER BY `rating` DESC";
-                }elseif($sorting == 'newest'){
-                    $sort = "ORDER BY `workplace_id` DESC";
-                }
-                if (isset($_GET['work_type_filter']) && !empty($_GET['work_type_filter'])) {
-                    $work_type_filter = $_GET['work_type_filter'];
-                    $query = "SELECT * FROM workplaces WHERE workplace_name LIKE ? AND work_type = ? $sort";
-                    $stmt = $conn->prepare($query);
-                    $stmt->execute(["%$search_query%", $work_type_filter]);
-                } else {
-                    // ถ้าไม่มีฟิลเตอร์แสดงท้งหมด
-                    $stmt = $conn->prepare("SELECT * FROM workplaces WHERE workplace_name LIKE ? $sort");
-                    $stmt->execute(["%$search_query%"]);
+                    if (isset($_GET['work_type_filter']) && !empty($_GET['work_type_filter'])) {
+                        $work_type_filter = $_GET['work_type_filter'];
+                        $stmt = $conn->prepare("SELECT COUNT(*) FROM workplaces WHERE workplace_name LIKE :search_query AND work_type = :work_type");
+                        $stmt->bindValue(':search_query', "%$search_query%", PDO::PARAM_STR);
+                        $stmt->bindValue(':work_type', $work_type_filter, PDO::PARAM_STR);
+                        $totalRows = $stmt->fetchColumn();
+                        $totalPages = ceil($totalRows / $limit);
+                        $stmt->execute();
+                        
+                        $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
+                        $offset = ($currentPage - 1) * $limit;
+                        $query = "SELECT * FROM workplaces WHERE workplace_name LIKE :search_query AND work_type = :work_type $sort LIMIT :limit OFFSET :offset;";
+                        $stmt = $conn->prepare($query);
+                        $stmt->bindValue(':search_query', "%$search_query%", PDO::PARAM_STR);
+                        $stmt->bindValue(':work_type', $work_type_filter, PDO::PARAM_STR);
+                        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+                        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+                        $stmt->execute();
+                        $workplacesData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                        $totalRows = $stmt->rowCount();
+
+                    } else {
+                        $stmt = $conn->prepare("SELECT COUNT(*) FROM workplaces WHERE workplace_name LIKE :search_query");
+                        $stmt->bindValue(':search_query', "%$search_query%", PDO::PARAM_STR);
+                        $stmt->execute();
+                        $totalRows = $stmt->fetchColumn();
+                        $totalPages = ceil($totalRows / $limit);
+
+                        $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
+                        $offset = ($currentPage - 1) * $limit;
+                        $stmt = $conn->prepare("SELECT * FROM workplaces WHERE workplace_name LIKE :search_query $sort LIMIT :limit OFFSET :offset;");
+                        $stmt->bindValue(':search_query', "%$search_query%", PDO::PARAM_STR);
+                        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+                        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+                        $stmt->execute();
+                        
+                    }
+
                 }
 
                 $workplacesData = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 $totalRows = $stmt->rowCount();
 
-                if ($search_query == '' && $work_type_filter == '' && $sorting == '') {
+                if ($search_query == '' && !isset($_GET['work_type_filter']) && $_GET['work_type_filter'] == 'newest' && $sorting == '') {
                     echo '<script>window.location.href = "index.php";</script>';
                     exit();
                 }
 
-                //แบ่งหน้า
+
+
                 $totalPages = ceil($totalRows / $limit);
                 $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
                 $offset = ($currentPage - 1) * $limit;
 
 
             } else {
-                // If no search query, retrieve all workplaces
                 $stmt = $conn->prepare("SELECT COUNT(*) FROM workplaces ");
                 $stmt->execute();
                 $totalRows = $stmt->fetchColumn();
 
-                // Determine the total number of pages
                 $totalPages = ceil($totalRows / $limit);
 
-                // Get the current page number from the URL query parameter
                 $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
                 $offset = ($currentPage - 1) * $limit;
                 $sort = "ORDER BY `workplace_id` DESC";

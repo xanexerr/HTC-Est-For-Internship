@@ -25,7 +25,6 @@
             }
         });';
         echo '</script>';
-
         exit();
     } else {
         if ($_SESSION["role"] !== 'admin') {

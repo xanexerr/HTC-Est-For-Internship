@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
 </head>
 
 <body>
@@ -41,7 +40,7 @@
             echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>';
             echo '<script>
             Swal.fire({
-                title: "เพิ่มผู้ใช้สำเร็จ!",
+                title: "เพิ่มสถานประกอบการสำเร็จ!",
                 icon: "success",
                 confirmButtonText: "ตกลง"
             }).then((result) => {

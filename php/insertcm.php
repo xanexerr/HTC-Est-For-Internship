@@ -11,113 +11,131 @@
     session_start();
     require_once "../connection.php";
 
-    $user_id = $_SESSION['user_id'];
-    $rating = $_POST['rate'];
-    $workplace_id = $_POST['workplace_id'];
-    $comment_text = $_POST['comment'];
+    // Check if the form was submitted
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    // Check if an image file is present
-    if (isset($_FILES['img']) && $_FILES['img']['error'] !== 4) {  // Check for error code 4 (UPLOAD_ERR_NO_FILE)
-        $img = $_FILES['img'];
-        $allow = array('jpg', 'jpeg', 'png');
-        $extension = explode(".", $img['name']);
-        $fileActExt = strtolower(end($extension));
-        $fileNew = rand() . "." . $fileActExt;
-        $filePath = "img/" . $fileNew;
+        // Function to safely get post data
+        function getPost($key, $defaultValue = "")
+        {
+            return isset($_POST[$key]) ? htmlspecialchars($_POST[$key]) : $defaultValue;
+        }
 
-        // Move uploaded image to the destination directory
-        if (move_uploaded_file($img['tmp_name'], $filePath)) {
-            // Image moved successfully, now insert into the database
-            $stmt = $conn->prepare("INSERT INTO comment (user_id, rating, workplace_id, comment_text, img_path) VALUES 
-            (:user_id, :rating, :workplace_id, :comment_text, :img_path)");
+        $user_id = $_SESSION['user_id'];
+        $rating = getPost('rate');
+        $workplace_id = getPost('workplace_id');
+        $comment_text = getPost('comment');
 
-            $stmt->bindParam(':user_id', $user_id);
-            $stmt->bindParam(':rating', $rating);
-            $stmt->bindParam(':workplace_id', $workplace_id);
-            $stmt->bindParam(':comment_text', $comment_text);
-            $stmt->bindParam(':img_path', $filePath);
+        // Validate and sanitize user inputs
+        $rating = filter_var($rating, FILTER_VALIDATE_FLOAT);
+        $workplace_id = filter_var($workplace_id, FILTER_SANITIZE_STRING);
+        $comment_text = filter_var($comment_text, FILTER_SANITIZE_STRING);
+
+        if ($rating === false || $workplace_id === false) {
+            echo "<script>
+            Swal.fire('Error', 'Invalid input.', 'error').then(function() {
+                window.location.href = '../index.php';
+            });
+        </script>";
+            exit();
+        }
+
+        // Get old rating from the database
+        $get_old_rating_query = "SELECT rating FROM workplaces WHERE workplace_id = ?";
+        $stmt_get_old_rating = $connection->prepare($get_old_rating_query);
+        $stmt_get_old_rating->bind_param("s", $workplace_id);
+        $stmt_get_old_rating->execute();
+        $stmt_get_old_rating->bind_result($oldrating);
+        $stmt_get_old_rating->fetch();
+        $stmt_get_old_rating->close();
+
+        $oldrating = (float) $oldrating;
+        $rating = (float) $rating;
+        if ($oldrating > 0) {
+            $newrating = ($oldrating + $rating) / 2;
+        } else {
+            $newrating = $rating;
+        }
+
+
+        // Update rating in the database
+        $update_rating_query = "UPDATE workplaces SET rating = ? WHERE workplace_id = ?";
+        $stmt_update_rating = $connection->prepare($update_rating_query);
+        $stmt_update_rating->bind_param("ds", $newrating, $workplace_id);
+        $stmt_update_rating->execute();
+
+        // Check if an image is being uploaded
+        if (isset($_FILES['img']) && $_FILES['img']['error'] !== 4) {
+            $img = $_FILES['img'];
+
+            // Check image type and upload
+            $allow = array('jpg', 'jpeg', 'png');
+            $extension = explode(".", $img['name']);
+            $fileActExt = strtolower(end($extension));
+            $fileNew = rand() . "." . $fileActExt;
+            $filePath = "../img/" . $fileNew;
+
+            if (move_uploaded_file($img['tmp_name'], $filePath)) {
+                // Insert comment with image into the database
+                $stmt = $connection->prepare("INSERT INTO comments (user_id, rating, workplace_id, comment_text, img) VALUES 
+            (?, ?, ?, ?, ?)");
+
+                $stmt->bind_param('dssss', $user_id, $rating, $workplace_id, $comment_text, $filePath);
+
+                if ($stmt->execute()) {
+                    echo "<script>
+                    Swal.fire('Success', 'Comment submitted!', 'success').then(function() {
+                        window.location.href = '../index.php';
+                    });
+                </script>";
+                    exit();
+                } else {
+                    echo "<script>
+                    Swal.fire('Error', 'Failed to submit comment.', 'error').then(function() {
+                        window.location.href = '../index.php';
+                    });
+                </script>";
+                    exit();
+                }
+            } else {
+                echo "<script>
+                Swal.fire('Error', 'Failed to upload image.', 'error').then(function() {
+                    window.location.href = '../index.php';
+                });
+            </script>";
+                exit();
+            }
+        } else {
+            // Insert comment without image into the database
+            $stmt = $connection->prepare("INSERT INTO comments (user_id, rating, workplace_id, comment_text) VALUES 
+        (?, ?, ?, ?)");
+
+            $stmt->bind_param('dsss', $user_id, $rating, $workplace_id, $comment_text);
 
             if ($stmt->execute()) {
-                echo "<script>";
-                echo "Swal.fire('Success', 'แสดงความคิดเห็นแล้ว!', 'success').then(function() {
-                window.location.href = '../admin-users-manage.php';
-            });
+                echo "<script>
+                Swal.fire('Success', 'Comment submitted!', 'success').then(function() {
+                    window.location.href = '../index.php';
+                });
             </script>";
                 exit();
             } else {
                 echo "<script>
-                Swal.fire('Error', 'มีข้อผิดพลาดในการแก้ไขข้อมูล: , 'error').then(function() {
-                    window.location.href = '../admin-users-manage.php';
+                Swal.fire('Error', 'Failed to submit comment.', 'error').then(function() {
+                    window.location.href = '../index.php';
                 });
             </script>";
+                exit();
             }
-        } else {
-            echo "<script>
-            Swal.fire('Error', 'มีข้อผิดพลาดในการอัปโหลดรูปภาพ: , 'error').then(function() {
-                window.location.href = '../admin-users-manage.php';
-            });
-        </script>";
         }
     } else {
-        $stmt = $conn->prepare("INSERT INTO comments (user_id, rating, workplace_id, comment_text) VALUES 
-        (:user_id, :rating, :workplace_id, :comment_text)");
-
-        $stmt->bindParam(':user_id', $user_id);
-        $stmt->bindParam(':rating', $rating);
-        $stmt->bindParam(':workplace_id', $workplace_id);
-        $stmt->bindParam(':comment_text', $comment_text);
-
-        if ($stmt->execute()) {
-            echo "<script>";
-            echo "Swal.fire('แสดงความคิดเห็นแล้ว!', 'ความคิดของคุณ ถึงบันทึกแล้ว', 'success').then(function() {
-            window.location.href = '../wp-detail.php?id=$workplace_id';
-        });
-        </script>";
-            exit();
-        } else {
-            echo "<script>
-            Swal.fire('Error', 'มีข้อผิดพลาดในการแก้ไขข้อมูล: , 'error').then(function() {
-                window.location.href = '../admin-users-manage.php';
+        echo "<script>
+            Swal.fire('Error', 'Form not submitted!', 'error').then(function() {
+                window.location.href = '../index.php';
             });
-        </script>";
-        }
+             </script>";
     }
     ?>
 
-
-
-    // if (in_array($fileActExt, $allow)) {
-    // if ($img['size'] > 0 && $img['error'] == 0) {
-    // if (move_uploaded_file($img['tmp_name'], $filePath)) {
-    // try {
-    // $sql = $conn->prepare("INSERT INTO comments(?, ?, comment_text, img) VALUES(:comment, :img)");
-    // $sql->bindParam(":comment", $comment);
-    // $sql->bindParam(":img", $fileNew);
-    // $sql->bindParam(":user_id", $user_id);
-    // $sql->execute();
-
-    // $_SESSION['success'] = "Data has been inserted successfully";
-    // header("location: std-wp-edit.php");
-    // exit();
-    // } catch (PDOException $e) {
-    // $_SESSION['error'] = "Error inserting data: " . $e->getMessage();
-    // header("location: std-wp-edit.php");
-    // exit();
-    // }
-    // } else {
-    // $_SESSION['error'] = "Error uploading image";
-    // }
-    // } else {
-    // $_SESSION['error'] = "Invalid image file";
-    // }
-    // } else {
-    // $_SESSION['error'] = "File format not allowed";
-    // }
-
-
-    // Redirect if form submission failed or not completed
-    // header("location: std-wp-edit.php");
-    // exit();
 </body>
 
 </html>

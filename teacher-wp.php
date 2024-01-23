@@ -7,10 +7,13 @@ include 'header.php';
 
 <body>
     <?php
+
     include 'navbar.php';
+    $user_id = $_SESSION['user_id'];
     $limit = 12;
     $stmt = $conn->prepare("SELECT COUNT(*) FROM workplaces WHERE user_id = '$user_id'");
     $stmt->execute();
+    $totalWorkplaces = $stmt->fetchColumn();
     $totalRows = $stmt->fetchColumn();
     $totalPages = ceil($totalRows / $limit);
     $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
@@ -19,7 +22,7 @@ include 'header.php';
     $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
     $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
     $stmt->execute();
-    $totalWorkplaces = $stmt->fetchColumn();
+
     $workplacesData = $stmt->fetchAll(PDO::FETCH_ASSOC);
     ?>
     <div class="flex-container">

@@ -17,38 +17,47 @@
     ?>
     <?php
     $limit = 12;
-    if (isset($_GET['search_query'])) {
-        $search_query = $_GET['search_query'];
-        $work_type_filter = ($_GET['work_type_filter']);
-        if (isset($_GET['work_type_filter']) && !empty($_GET['work_type_filter'])) {
-            $work_type_filter = $_GET['work_type_filter'];
-            $query = "SELECT * FROM workplaces WHERE workplace_name LIKE ? AND work_type = ?";
-            $stmt = $conn->prepare($query);
-            $stmt->execute(["%$search_query%", $work_type_filter]);
-        } else {
-            $stmt = $conn->prepare("SELECT * FROM workplaces WHERE workplace_name LIKE ?");
-            $stmt->execute(["%$search_query%"]);
-        }
-        $workplacesData = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $totalRows = $stmt->rowCount();
-        $totalPages = ceil($totalRows / $limit);
-        $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
-        $offset = ($currentPage - 1) * $limit;
+    $search_query = isset($_GET['search_query']) ? $_GET['search_query'] : '';
+
+    if (isset($_GET['work_type_filter']) && $_GET['work_type_filter'] != '') {
+        $work_type_filter = $_GET['work_type_filter'];
+
+        $stmt = $conn->prepare("SELECT COUNT(*) FROM workplaces WHERE workplace_name LIKE :search_query AND work_type = :work_type_filter");
+        $stmt->bindValue(':search_query', "%$search_query%", PDO::PARAM_STR);
+        $stmt->bindValue(':work_type_filter', $work_type_filter, PDO::PARAM_STR);
+        $stmt->execute();
     } else {
-        $stmt = $conn->prepare("SELECT COUNT(*) FROM workplaces ");
+        $stmt = $conn->prepare("SELECT COUNT(*) FROM workplaces WHERE workplace_name LIKE :search_query");
+        $stmt->bindValue(':search_query', "%$search_query%", PDO::PARAM_STR);
         $stmt->execute();
-        $totalRows = $stmt->fetchColumn();
-        $totalPages = ceil($totalRows / $limit);
-        $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
-        $offset = ($currentPage - 1) * $limit;
-        $stmt = $conn->prepare("SELECT * FROM workplaces LIMIT :limit OFFSET :offset");
-        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
-        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
-        $stmt->execute();
-        $workplacesData = $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    $totalRows = $stmt->fetchColumn();
+    $totalPages = ceil($totalRows / $limit);
+    $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
+    $offset = ($currentPage - 1) * $limit;
+
+    if (isset($_GET['work_type_filter']) && $_GET['work_type_filter'] != '') {
+        $work_type_filter = $_GET['work_type_filter'];
+
+        $query = "SELECT * FROM workplaces WHERE workplace_name LIKE :search_query AND work_type = :work_type_filter ORDER BY workplace_id DESC LIMIT :limit OFFSET :offset";
+        $stmt = $conn->prepare($query);
+        $stmt->bindValue(':search_query', "%$search_query%", PDO::PARAM_STR);
+        $stmt->bindValue(':work_type_filter', $work_type_filter, PDO::PARAM_STR);
+    } else {
+        $query = "SELECT * FROM workplaces WHERE workplace_name LIKE :search_query ORDER BY workplace_id DESC LIMIT :limit OFFSET :offset";
+        $stmt = $conn->prepare($query);
+        $stmt->bindValue(':search_query', "%$search_query%", PDO::PARAM_STR);
+    }
+
+    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+    $stmt->execute();
+    $workplacesData = $stmt->fetchAll(PDO::FETCH_ASSOC);
     ?>
-    <div class="flex-container">
+
+
+    <div class="flex-container vh-100">
         <div class="container p-0">
             <div class="my-3 bg-body  shadow">
                 <div class=" justify-content-center ">
