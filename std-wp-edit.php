@@ -242,7 +242,7 @@
 
                         <div class="form-group">
                             <label for="map">แผนที่</label>
-                            <input type="text" class="form-control" name="map" id="map" rows="4" value="<?= $map ?>">
+                            <input type="url" class="form-control" name="map" id="map" rows="4" value="<?= $map ?>">
                         </div>
 
                         <button type="submit" value="submit"

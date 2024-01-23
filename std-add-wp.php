@@ -88,7 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                         <div class="form-group">
                             <label for="map">แผนที่</label>
-                            <input type="text" class="form-control" name="map" id="map" rows="4">
+                            <input type="url" class="form-control" name="map" id="map" rows="4">
                         </div>
 
                         <div class="mb-3 mt-3">

@@ -18,21 +18,50 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css">
     <link href="css/custom.css" rel="stylesheet" crossorigin="anonymous">
     <style>
-        /* Style the gallery container */
         .image-gallery {
             display: flex;
             flex-wrap: wrap;
             justify-content: flex-start;
-            max-height: 500px;
+            max-height: 300px;
             overflow-y: auto;
         }
 
-        /* Style each image in the gallery */
         .gallery-image {
             width: 150px;
             height: 100px;
             margin: 10px;
             object-fit: cover;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .gallery-image:hover {
+            transform: scale(1.1);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: start;
+        }
+
+        .modal-content {
+            margin-top: 3%;
+            max-width: 55%;
+            max-height: 55%;
+        }
+
+        .modal-image {
+
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
     </style>
 </head>

@@ -34,7 +34,7 @@
         $stmt->bind_param("ssssssi", $workplace_name, $work_type, $description, $work_tel, $workplace_address, $map, $user_id);
         if ($stmt->execute()) {
             echo "<script>
-            Swal.fire('Success', 'แก้ไขข้อมูลสำเร็จ!', 'success').then(function() {
+            Swal.fire('แก้ไขข้อมูลสำเร็จ', 'บันทึกข้อมูลสถานประกอบการเรียบร้อย', 'success').then(function() {
                 window.location.href = '../index.php';
             });
         </script>";

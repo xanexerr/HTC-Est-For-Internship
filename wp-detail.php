@@ -28,7 +28,7 @@ include "navbar.php";
     }
     $stmt_fetch_images->close();
     ?>
-    <div class="flex-contairner vh-100">
+    <div class="flex-contairner min-vh-100">
         <div class="container  px-0 border   shadow rounded my-3 col-6 ">
 
             <p class='h4 py-2  bg-dark border text-white  mb-0 text-center  rounded-top'>รายละเอียด </p>
@@ -73,13 +73,36 @@ include "navbar.php";
                         <label class="h4 m-0">
                             ภาพจากรุ่นก่อน </label>
                         <div class="image-gallery">
-
                             <?php foreach ($images as $image): ?>
                                 <?php if ($image !== null): ?>
-                                    <img src="img/<?php echo $image; ?>" alt="Workplace Image" class="gallery-image">
+                                    <img src="img/<?php echo $image; ?>" alt="Workplace Image" class="gallery-image"
+                                        onclick="openModal('img/<?php echo $image; ?>')">
                                 <?php endif; ?>
                             <?php endforeach; ?>
                         </div>
+
+                        <!-- The Modal -->
+                        <div class="modal" id="myModal">
+                            <div class="modal-content">
+                                <img class="modal-image" id="modalImage" alt="Full Image">
+                            </div>
+                        </div>
+                        <script>
+                            function openModal(imageSrc) {
+                                var modal = document.getElementById('myModal');
+                                var modalImage = document.getElementById('modalImage');
+
+                                modalImage.src = imageSrc;
+                                modal.style.display = 'flex';
+
+                                window.onclick = function (event) {
+                                    if (event.target == modal) {
+                                        modal.style.display = 'none';
+                                    }
+                                };
+                            }
+                        </script>
+
                         <label class="h4 m-0">
                             คะแนนรีวิว :
                             <?php

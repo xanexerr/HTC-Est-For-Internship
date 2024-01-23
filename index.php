@@ -8,10 +8,10 @@ include 'navbar.php';
 <html lang="en">
 
 <body class="bg-white">
-    <div class="container rounded-top rounded-bottom shadow p-0  my-3  border bg-white col-12">
-        <div class="bg-body rounded-0  rounded">
+    <div class="container rounded-top rounded-bottom shadow p-0  my-3  border bg-white col-12 ">
+        <div class="bg-body rounded-0  rounded ">
             <?php
-            $limit = 12;
+            $limit = 15;
             if (isset($_GET['sorting'])) {
                 $sorting = ($_GET['sorting']);
                 if ($sorting == 'highscore') {
@@ -46,29 +46,17 @@ include 'navbar.php';
 
                     
                 }
-
                 $workplacesData = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 $totalRows = $stmt->rowCount();
-
-                if ($search_query == '' && !isset($_GET['work_type_filter']) && $_GET['work_type_filter'] == 'newest' && $sorting == '') {
+                if ($search_query == '' && $_GET['work_type_filter'] == '' && $sorting == '') {
                     echo '<script>window.location.href = "index.php";</script>';
                     exit();
                 }
-
-
-
-                $totalPages = ceil($totalRows / $limit);
-                $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
-                $offset = ($currentPage - 1) * $limit;
-
-
             } else {
                 $stmt = $conn->prepare("SELECT COUNT(*) FROM workplaces ");
                 $stmt->execute();
                 $totalRows = $stmt->fetchColumn();
-
                 $totalPages = ceil($totalRows / $limit);
-
                 $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
                 $offset = ($currentPage - 1) * $limit;
                 $sort = "ORDER BY `workplace_id` DESC";
@@ -78,9 +66,27 @@ include 'navbar.php';
                 $stmt->execute();
                 $workplacesData = $stmt->fetchAll(PDO::FETCH_ASSOC);
             }
+            function buildQueryString()
+            {
+                $queryString = '';
+
+                if (isset($_GET['search_query'])) {
+                    $queryString .= '&search_query=' . urlencode($_GET['search_query']);
+                }
+
+                if (isset($_GET['work_type_filter'])) {
+                    $queryString .= '&work_type_filter=' . urlencode($_GET['work_type_filter']);
+                }
+
+                if (isset($_GET['sorting'])) {
+                    $queryString .= '&sorting=' . urlencode($_GET['sorting']);
+                }
+
+                return $queryString;
+            }
             ?>
             <p class='h4 py-2 px-auto bg-dark  text-white mb-0 text-center '>รายชื่อสถานประกอบการ</p>
-            <form class="m-0  col-12" method="GET">
+            <form class="m-0  col-12 " method="GET">
 
                 <div class="input-group container  bg-secondary p-3  ">
                     <div class="col-2">
@@ -127,7 +133,7 @@ include 'navbar.php';
     
                 </div>
             </form>
-
+<div class="flex-contarine vh-100">
             <table class="container table table-hover mb-0  ">
                 <thead class="thead-dark">
                     <tr class="col-9">
@@ -185,38 +191,37 @@ include 'navbar.php';
             <div class="container my-3 ">
                 <nav aria-label=" Page navigation example">
                     <ul class="pagination justify-content-center m-0">
-                        <?php if ($currentPage > 1): ?>
-                            <li class="page-item">
-                                <a class="page-link bg-dark text-white" href="?page=<?php echo ($currentPage - 1); ?>"
-                                    aria-label="Previous">
-                                    <span aria-hidden="true">
-                                        &#60;
-                                    </span>
-                                </a>
-                            </li>
-                        <?php endif; ?>
+                    <?php if ($currentPage > 1): ?>
+                        <li class="page-item">
+                            <a class="page-link bg-dark text-white" href="?page=<?php echo ($currentPage - 1) . buildQueryString(); ?>"
+                                aria-label="Previous">
+                                <span aria-hidden="true">&#60;</span>
+                            </a>
+                        </li>
+                    <?php endif; ?>
+                    
+                    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                        <li class="page-item <?php echo ($i == $currentPage) ? 'active' : ''; ?>">
+                            <a class="page-link" href="?page=<?php echo $i . buildQueryString(); ?>">
+                                <?php echo $i; ?>
+                            </a>
+                        </li>
+                    <?php endfor; ?>
+                    
+                    <?php if ($currentPage < $totalPages): ?>
+                        <li class="page-item">
+                            <a class="page-link bg-dark text-white" href="?page=<?php echo ($currentPage + 1) . buildQueryString(); ?>"
+                                aria-label="Next">
+                                <span aria-hidden="true">&#62;</span>
+                            </a>
+                        </li>
+                    <?php endif; ?>
 
-                        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                            <li class="page-item <?php echo ($i == $currentPage) ? 'active' : ''; ?>">
-                                <a class="page-link  " href="?page=<?php echo $i; ?>">
-                                    <?php echo $i; ?>
-                                </a>
-                            </li>
-                        <?php endfor; ?>
-
-                        <?php if ($currentPage < $totalPages): ?>
-                            <li class="page-item">
-                                <a class="page-link bg-dark text-white" href="?page=<?php echo ($currentPage + 1); ?>"
-                                    aria-label="Next">
-                                    <span aria-hidden="true"> &#62;</span>
-                                </a>
-                            </li>
-                        <?php endif; ?>
                     </ul>
                 </nav>
             </div>
         </div>
-
+</div>
     </div>
     <!-- footer -->
     <?php

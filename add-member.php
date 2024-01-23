@@ -71,7 +71,7 @@ include("header.php")
                     </div>
 
                     <label for="user_tel" class="form-label mt-1">เบอร์โทร</label>
-                    <input type="text" class="form-control" name="user_tel" required>
+                    <input type="number" class="form-control" name="user_tel" required>
 
                     <div class="form-group">
                         <label for="user_type">ประเภทบัญชี</label>
