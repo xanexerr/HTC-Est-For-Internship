@@ -8,7 +8,6 @@ include 'header.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
 </head>
 
 <body>
@@ -65,7 +64,7 @@ include 'header.php';
     $usersData = $stmt->fetchAll(PDO::FETCH_ASSOC);
     ?>
     <div class="flex-container">
-        <div class="container p-0 vh-100">
+        <div class="container p-0 min-vh-100">
             <div class="my-3 bg-body  shadow ">
                 <div class=" justify-content-center  ">
                     <div class="p-0 ">

@@ -9,8 +9,8 @@ include("header.php");
     include("navbar.php");
     ?>
     <div
-        class="row flex-lg-row container rounded d-flex  mx-auto my-4 justify-content-evenly align-items-center  flex-md-column flex-column  vh-100">
-        <div class="card col-lg-3 p-0 mb-4" style="height: fit-content; ">
+        class="row flex-lg-row container rounded d-flex  mx-auto my-4 justify-content-evenly align-items-center  flex-md-column flex-column  min-vh-100">
+        <div class="card col-lg-3 col-6 p-0 mb-4" style="height: fit-content; ">
             <img class="rounded-top" src="img/xan.jpg" alt="sand"
                 style="width:100%; aspect-ratio: 3.6/4; object-fit:cover" />
             <p class="card-title text-center fs-4 mt-2 mb-0">
@@ -27,7 +27,7 @@ include("header.php");
             </div>
 
         </div>
-        <div class="card col-lg-3  mb-3 p-0 " style="height: fit-content; ">
+        <div class="card col-lg-3  col-6  mb-3 p-0 " style="height: fit-content; ">
             <img class="rounded-top" src="img/handsome.jpg" alt="champ"
                 style="width:100%; aspect-ratio: 3.6/4; object-fit:cover" />
             <p class="card-title text-center fs-4 mt-2 mb-0">
@@ -43,7 +43,7 @@ include("header.php");
 
         </div>
 
-        <div class="card col-lg-3  mb-3 p-0 " style="height: fit-content; ">
+        <div class="card col-lg-3  col-6  mb-3 p-0 " style="height: fit-content; ">
             <img class="rounded-top" src="img/bast.jpg" alt="bas"
                 style="width:100%; aspect-ratio: 3.6/4; object-fit:cover" />
             <p class="card-title text-center fs-4 mt-2 mb-0">

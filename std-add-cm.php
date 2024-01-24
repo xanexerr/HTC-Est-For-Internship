@@ -90,8 +90,8 @@ $workplace_id = $wpresult["workplace_id"];
                     </script>
                     <div class="mb-3">
                         <label for="comment" class="col-form-label">ความคิดเห็น :</label>
-                        <textarea class="form-control" name="comment" rows="3" style="resize: vertical;"
-                            required></textarea>
+                        <textarea class="form-control" name="comment" rows="3" maxlength="250" style="resize: vertical;"
+                            ></textarea>
 
                     </div>
                     <div class="mb-3">

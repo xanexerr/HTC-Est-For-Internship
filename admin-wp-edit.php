@@ -12,21 +12,7 @@ include("header.php")
     <?php
     require('connection.php');
     include 'navbar.php';
-    if (!isset($_SESSION["user_id"])) {
-        echo '<script>';
-        echo 'alert("คุณยังไม่ได้เข้าสู่ระบบ");';
-        echo 'window.location.href = "login.php";';
-        echo '</script>';
-        exit();
-    } else {
-        if ($_SESSION["role"] !== 'admin') {
-            echo '<script>';
-            echo 'alert("คุณไม่มีสิทธิเข้าถึง!");';
-            echo 'window.location.href = "index.php";';
-            echo '</script>';
-            exit();
-        }
-    }
+    include 'php/admin-check.php';
 
     $workplace_id = $_GET['id'];
     $stmt = $conn->prepare("SELECT COUNT(*) FROM workplaces ");
@@ -41,7 +27,7 @@ include("header.php")
     <!-- content -->
 
     <div class="flex-container">
-        <div class="container  px-0 border   shadow rounded my-3 col-md-10">
+        <div class="container  px-0 border   shadow rounded my-3 col-md-10 bg-white">
             <p class='h4 py-2  bg-dark border text-white  mb-0 text-center  rounded-top '>รายละเอียด </p>
             <div class="">
                 <div class="">

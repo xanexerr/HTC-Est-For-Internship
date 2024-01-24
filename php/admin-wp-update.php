@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.0"></script>
+    <link href="../css/select2.min.css" rel="stylesheet">
+    <script src="../js/sweetalert10.16.0.js"></script>
 </head>
 
 <body>

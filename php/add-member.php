@@ -42,10 +42,10 @@
     }
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $user_fname = $_POST['user_fname'];
-        $user_lname = $_POST['user_lname'];
-        $username = $_POST['username'];
-        $user_type = $_POST['user_type'];
+        $user_fname = trim($_POST['user_fname']);
+        $user_lname = trim($_POST['user_lname']);
+        $username = trim($_POST['username']);
+        $user_type = trim($_POST['user_type']);
 
         $query = "SELECT * FROM users WHERE username = :username";
         $stmt = $conn->prepare($query);

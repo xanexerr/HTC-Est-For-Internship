@@ -59,7 +59,7 @@ include("header.php")
     <!-- content -->
 
     <div class="flex-container">
-        <div class="container  px-0 border   shadow  my-3 col-md-10 w-50">
+        <div class="container  px-0 border   shadow  my-3 col-md-10 col-lg-6 bg-white">
             <p class='h4 py-2  bg-dark border text-white  mb-0 text-center   '>รายละเอียด </p>
             <div class="">
                 <div class="">

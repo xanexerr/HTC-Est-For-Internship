@@ -2,8 +2,10 @@
 <html lang="en">
 
 <head>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.0"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../css/select2.min.css" rel="stylesheet">
+    <script src="../js/sweetalert10.16.0.js"></script>
 </head>
 
 <body>
@@ -39,7 +41,23 @@
             exit();
         }
 
-        // Get old rating from the database
+        $check_comment_query = "SELECT COUNT(*) FROM comments WHERE user_id = ?";
+        $stmt_check_comment = $connection->prepare($check_comment_query);
+        $stmt_check_comment->bind_param("s", $user_id);
+        $stmt_check_comment->execute();
+        $stmt_check_comment->bind_result($comment_count);
+        $stmt_check_comment->fetch();
+        $stmt_check_comment->close();
+
+        if ($comment_count > 0) {
+            echo "<script>
+            Swal.fire('คุณแสดงความเห็นไปแล้ว', 'คุณได้แสดงความเห็นไปแล้ว', 'warning').then(function() {
+                window.location.href = '../index.php';
+            });
+        </script>";
+            exit();
+        }
+
         $get_old_rating_query = "SELECT rating FROM workplaces WHERE workplace_id = ?";
         $stmt_get_old_rating = $connection->prepare($get_old_rating_query);
         $stmt_get_old_rating->bind_param("s", $workplace_id);
@@ -57,7 +75,7 @@
         }
 
 
-        // Update rating in the database
+
         $update_rating_query = "UPDATE workplaces SET rating = ? WHERE workplace_id = ?";
         $stmt_update_rating = $connection->prepare($update_rating_query);
         $stmt_update_rating->bind_param("ds", $newrating, $workplace_id);
@@ -83,7 +101,7 @@
 
                 if ($stmt->execute()) {
                     echo "<script>
-                    Swal.fire('Success', 'Comment submitted!', 'success').then(function() {
+                    Swal.fire('แสดงความคิดเห็นสำเร็จ', 'ระบบบันทุกข้อมูลของคุณเรียบร้อบ!', 'success').then(function() {
                         window.location.href = '../index.php';
                     });
                 </script>";
@@ -113,7 +131,7 @@
 
             if ($stmt->execute()) {
                 echo "<script>
-                Swal.fire('Success', 'Comment submitted!', 'success').then(function() {
+                Swal.fire('แสดงความคิดเห็นแล้ว', 'บันทึกข้อมูลของคุณเข้าสู่ระบบแล้ว', 'success').then(function() {
                     window.location.href = '../index.php';
                 });
             </script>";

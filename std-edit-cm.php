@@ -63,10 +63,12 @@ $usercomment = $stmt_usercomment->get_result();
 $com = $usercomment->fetch_assoc();
 $comrate = $com["rating"];
 $comtext = $com["comment_text"];
-
+if (isset($com["img"])) {
+    $u_image = $com["img"];
+}
 
 ?>
-<div class="flex-container vh-100">
+<div class="flex-container min-vh-100">
     <div class="container ">
         <div class="my-3 bg-body  shadow  col-6  mx-auto">
             <p class='h4 py-2 px-auto bg-dark border text-white mb-0 text-center'>
@@ -87,9 +89,19 @@ $comtext = $com["comment_text"];
                     </script>
                     <div class="mb-3">
                         <label for="comment" class="col-form-label">ความคิดเห็น :</label>
-                        <textarea class="form-control" name="comment" rows="3" style="resize: vertical;"
+                        <textarea maxlength="250" class="form-control" name="comment" rows="3" style="resize: vertical;"
                             required><?php echo $comtext; ?></textarea>
 
+                    </div>
+                    <div class="mb-3">
+                        <label for="img" class="col-form-label">แก้ไขรูปภาพ</label>
+                        <input type="file" required class="form-control" id="imgInput" name="img"
+                            onchange="previewImage(event)">
+
+                        <img id="imgPreview" alt="Preview Image"
+                            style="width: 100% ;margin-top: 10px; display: none; align-items-center">
+
+                        <input type="hidden" name="old_img" value="<?php echo isset($u_image) ? $u_image : ''; ?>">
                     </div>
                     <button button type="submit" name="submit" class="btn btn-success w-100 ">ยืนยัน</button>
                     <a href="std-wp-edit.php" type="button" class="btn btn-secondary w-100 mt-1">ยกเลิก</a>
@@ -99,3 +111,23 @@ $comtext = $com["comment_text"];
     </div>
 </div>
 <?php include 'script.php'; ?>
+<script>
+    function previewImage(event) {
+        const input = event.target;
+        const preview = document.getElementById('imgPreview');
+
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            preview.src = '';
+            preview.style.display = 'none';
+        }
+    }
+</script>

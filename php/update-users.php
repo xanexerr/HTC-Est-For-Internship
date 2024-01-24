@@ -2,16 +2,49 @@
 <html lang="en">
 
 <head>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.0"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../css/select2.min.css" rel="stylesheet">
+    <script src="../js/sweetalert10.16.0.js"></script>
 </head>
 
 <body>
 
     <?php
-    require_once("../connection.php");
     session_start();
+    require_once("../connection.php");
+    if (!isset($_SESSION["user_id"])) {
+        echo '<script>';
+        echo 'Swal.fire({
+        title: "คุณยังไม่ได้เข้าสู่ระบบ",
+        icon: "warning",
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "OK"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "../login.php";
+            }
+        });';
+        echo '</script>';
 
+        exit();
+    } else {
+        if ($_SESSION["role"] !== 'admin') {
+            echo '<script>';
+            echo 'Swal.fire({
+            title: "คุณไม่มีสิทธิเข้าถึง!",
+            icon: "warning",
+            confirmButtonColor: "#3085d6",
+            confirmButtonText: "OK"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "../index.php";
+                }
+            });';
+            echo '</script>';
+            exit();
+        }
+    }
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $old_user_id = $_POST["old_user_id"];
         $user_id = $_POST['user_id'];
@@ -34,7 +67,7 @@
 
         if ($stmt->execute()) {
             echo "<script>
-            Swal.fire('Success', 'แก้ไขข้อมูลสำเร็จ!', 'success').then(function() {
+            Swal.fire('แก้ไขข้อมูลสำเร็จ', 'ระบบได้ทำการบันทึกข้อมูลเรียบร้อย!', 'success').then(function() {
                 window.location.href = '../admin-users-manage.php';
             });
         </script>";

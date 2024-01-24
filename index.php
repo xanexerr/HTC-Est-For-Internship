@@ -18,7 +18,11 @@ include 'navbar.php';
                     $sort = "ORDER BY `rating` DESC";
                 } elseif ($sorting == 'newest') {
                     $sort = "ORDER BY `workplace_id` DESC";
-                } else {
+                } elseif ($sorting == 'oldest') {
+                    $sort = "ORDER BY `workplace_id` ASC";
+                } elseif ($sorting == 'popular') {
+                    $sort = "ORDER BY (SELECT COUNT(*) FROM users WHERE users.workplace_id = workplaces.workplace_id) DESC";
+                }else {
                     $sort = "ORDER BY `workplace_id` DESC";
                 }
                 if (isset($_GET['work_type_filter']) && $_GET['work_type_filter'] !== '') {
@@ -111,9 +115,13 @@ include 'navbar.php';
                     </div>
                     <div class="col-2 me-2 ">
                         <select class="form-control rounded-0 rounded-end h-100" name="sorting" onchange="this.form.submit()">
-                            <option value="newest">เรียงจากเพิ่มล่าสุด</option>
+                            <option value="newest">เรียงจากที่เพิ่มล่าสุด</option>
+                            <option value="oldest" <?php if (isset($_GET['sorting']) && $_GET['sorting'] === 'oldest')
+                                echo 'selected'; ?>>เรียงจากที่เพิ่มนานสุด</option>
                             <option value="highscore" <?php if (isset($_GET['sorting']) && $_GET['sorting'] === 'highscore')
                                 echo 'selected'; ?>>เรียงจากคะแนนรีวิว</option>
+                                <option value="popular" <?php if (isset($_GET['sorting']) && $_GET['sorting'] === 'popular')
+                                    echo 'selected'; ?>>เรียงจากความนิยม</option>
                         </select>
                     </div>
         
@@ -133,7 +141,7 @@ include 'navbar.php';
     
                 </div>
             </form>
-<div class="flex-contarine vh-100">
+<div class="flex-contarine min-vh-100">
             <table class="container table table-hover mb-0  ">
                 <thead class="thead-dark">
                     <tr class="col-9">
@@ -163,23 +171,38 @@ include 'navbar.php';
                                 <?php echo $row['description']; ?>
                             </td>
                             <td class="text-center">
-                                <?php $rating = $row['rating'];
-                                if (is_numeric($rating)) {
-                                    echo str_repeat("⭐", $rating);
+                                <?php
+                            if (isset($row['rating'])) {
+                                $rating = $row['rating'];
+                                if (is_numeric($rating) && $rating !== '') {
+                                    $rating = (float) $rating;
+                                    ?>
+                                    <div class="star-widget fs-5 center text-warning">
+                                        <?php
+                                        for ($i = 1; $i <= 5; $i++) {
+                                            $difference = $rating - $i + 0.5;
+
+                                            if ($difference >= 0.5) {
+                                                echo "<i class='fas fa-star'></i>";
+                                            } elseif ($difference > 0) {
+                                                echo "<i class='fas fa-star-half'></i>";
+                                            }
+                                        }
+                                    }
                                 }
-                                ?>
+                                        ?>
+                                    </div>
                             </td>
-                            <td class="text-center">
+                            <td class="text-center col-2">
                                 <div class="btn-group ">
                                     <a class="btn btn-sm btn-primary " href="wp-detail.php?id=<?php echo $row['workplace_id']; ?>">
                                         รายละเอียด
                                     </a>
-
-                                </div>
-                            </td>
-                        </tr>
-                        <!-- Modal -->
-                        <div class="modal fade" id="my-modal<?php echo $row['workplace_id']; ?>" tabindex="-1"
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Modal -->
+                            <div class="modal fade" id="my-modal<?php echo $row['workplace_id']; ?>" tabindex="-1"
                             aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <!-- Modal Content -->
                         </div>

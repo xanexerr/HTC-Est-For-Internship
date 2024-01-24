@@ -40,7 +40,8 @@ include "navbar.php";
                         <?php echo $row['workplace_name']; ?>
                     </p>
                     <a class="h4 btn btn-primary"
-                        href="index.php?search_query=&work_type_filter=<?php echo $row['work_type']; ?>">ประเภทงาน :
+                        href="index.php?work_type_filter=<?php echo $row['work_type']; ?>&sorting=newest&search_query=">ประเภทงาน
+                        :
                         <?php echo $row['work_type']; ?>
                     </a>
                     <p class="h5">ลักษณะงาน :
@@ -70,16 +71,7 @@ include "navbar.php";
                     ?>
 
                     <div class="border rounded p-4 mt-5">
-                        <label class="h4 m-0">
-                            ภาพจากรุ่นก่อน </label>
-                        <div class="image-gallery">
-                            <?php foreach ($images as $image): ?>
-                                <?php if ($image !== null): ?>
-                                    <img src="img/<?php echo $image; ?>" alt="Workplace Image" class="gallery-image"
-                                        onclick="openModal('img/<?php echo $image; ?>')">
-                                <?php endif; ?>
-                            <?php endforeach; ?>
-                        </div>
+
 
                         <!-- The Modal -->
                         <div class="modal" id="myModal">
@@ -116,7 +108,7 @@ include "navbar.php";
                                 if (is_numeric($rating) && $rating !== '') {
                                     $rating = (float) $rating;
                                     ?>
-                                    <div class="star-widget center text-warning">
+                                    <div class="star-widget fs-2 center text-warning">
                                         <?php
                                         for ($i = 1; $i <= 5; $i++) {
                                             $difference = $rating - $i + 0.5;
@@ -137,40 +129,60 @@ include "navbar.php";
                             }
                             ?>
                             <div>
+                                <div style="max-height: 500px; overflow-y: auto;">
+                                    <?php
+                                    if ($resultComments->num_rows > 0) {
+                                        echo "<p class='h4 mt-1 '>ความคิดเห็น</p>";
+                                        $commentCount = 0;
 
-                                <?php
-                                if ($resultComments->num_rows > 0) {
-                                    echo "<p class='h4 '>ความคิดเห็น</p>";
-                                    $commentCount = 0;
-                                    while ($comment = $resultComments->fetch_assoc()) {
-                                        echo "<div class='mb-3 mt-0 mb-0 text-secondary m-5 '>";
-                                        echo " <p class='h6 '>ความคิดเห็นที่ " . ($commentCount + 1) . " : " . $comment['comment_text'] . "</p>";
-                                        echo " </div>";
-                                        $commentCount++;
+                                        while ($comment = $resultComments->fetch_assoc()) {
+                                            if ($comment['comment_text'] !== null && $comment['comment_text'] !== '') {
+                                                echo "<div class='mb-3 mt-0 mb-0 text-secondary m-5 '>";
+                                                echo "<p class='h6 '>ความคิดเห็นที่ " . ($commentCount + 1) . " : " . $comment['comment_text'] . "</p>";
+                                                echo "</div>";
+                                                $commentCount++;
+                                            }
+                                        }
                                     }
-                                } else {
-
-                                }
-                                ?>
+                                    ?>
+                                </div>
                             </div>
+                            <?php if (!empty($images)): ?>
+                                <label class="h4 m-0">ภาพจากรุ่นก่อน</label>
+                                <div class="image-gallery">
+                                    <?php foreach ($images as $image): ?>
+                                        <?php if ($image !== null): ?>
+                                            <img src="img/<?php echo $image; ?>" alt="Workplace Image" class="gallery-image"
+                                                onclick="openModal('img/<?php echo $image; ?>')">
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+                                </div>
+                            <?php endif; ?>
                     </div>
                 </div>
                 <?php
-                $stmt_userwp = $connection->prepare("SELECT workplace_id FROM users WHERE user_id = ?");
-                $stmt_userwp->bind_param("s", $user_id);
-                $stmt_userwp->execute();
-                $stmt_userwp = $stmt_userwp->get_result();
-                $wpresult = $stmt_userwp->fetch_assoc();
-                $workplace_id = $wpresult["workplace_id"];
-                if ($workplace_id === null && $_SESSION["role"] == 'student') { ?>
-                    <form class="p-3" name="select_workplace_form" method="POST" action="php/update-wp-select.php"
-                        enctype="multipart/form-data">
-                        <input type="hidden" name="workplace" value="<?php echo $row['workplace_id'] ?>" ?>
-                        <button type=" submit" value="submit" class="mt-3 btn btn-success w-100">เลือก
-                            <?php echo $row['workplace_name'] ?> เป็นสถานประกอบการของฉัน
-                        </button>
-                    </form>
-                <?php } ?>
+                if (isset($_SESSION['user_id'])) {
+                    $stmt_userwp = $connection->prepare("SELECT workplace_id FROM users WHERE user_id = ?");
+                    $stmt_userwp->bind_param("s", $user_id);
+                    $stmt_userwp->execute();
+                    $stmt_userwp = $stmt_userwp->get_result();
+                    $wpresult = $stmt_userwp->fetch_assoc();
+                    $workplace_id = $wpresult["workplace_id"];
+                    if (isset($_GET['id'])) {
+                        $workid = $_GET['id'];
+                    }
+                    if ($workplace_id === null && $_SESSION["role"] == 'student') { ?>
+                        <form class="p-3" name="select_workplace_form" method="POST" action="php/update-wp-select.php"
+                            enctype="multipart/form-data">
+                            <input type="hidden" name="workplace" value="<?php echo $workid; ?>">
+                            <button type="submit" value="submit" class="mt-3 btn btn-success w-100">เลือก
+                                <?php echo $row["workplace_name"];
+                                ; ?> เป็นสถานประกอบการของฉัน
+                            </button>
+                        </form>
+                    <?php }
+                }
+                ?>
             </div>
             <div class="col-sm-8"></div>
         </div>

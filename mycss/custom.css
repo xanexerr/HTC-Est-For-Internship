@@ -1,0 +1,68 @@
+@font-face {
+ font-family: "Roboto";
+ src: url("fonts/roboto/Roboto-Regular.eot");
+ src: url("fonts/roboto/Roboto-Regular.eot") format("embedded-opentype"),
+  url("fonts/roboto/Roboto-Regular.woff2") format("woff2"),
+  url("fonts/roboto/Roboto-Regular.woff") format("woff"),
+  url("fonts/roboto/Roboto-Regular.ttf") format("truetype");
+}
+@font-face {
+ font-family: "noto-sans-thai";
+ src: url("fonts/notosansthai/notosansthai-Regular.eot");
+ src: url("fonts/notosansthai/notosansthai-Regular.eot") format("embedded-opentype"),
+  url("fonts/notosansthai/notosansthai-Regular.woff2") format("woff2"),
+  url("fonts/notosansthai/notosansthai-Regular.woff") format("woff"),
+  url("fonts/notosansthai/notosansthai-Regular.ttf") format("truetype");
+}
+
+body {
+ background-image: url("../img/bg.jpg");
+ background-size: cover;
+ background-position: fixed start;
+ background-repeat: no-repeat;
+}
+
+.image-gallery {
+ display: flex;
+ flex-wrap: wrap;
+ justify-content: flex-start;
+ max-height: 300px;
+ overflow-y: auto;
+}
+
+.gallery-image {
+ width: 150px;
+ height: 100px;
+ margin: 10px;
+ object-fit: cover;
+ transition: transform 0.3s ease-in-out;
+}
+
+.gallery-image:hover {
+ transform: scale(1.1);
+}
+
+.modal {
+ display: none;
+ position: fixed;
+ top: 50%;
+ left: 50%;
+ transform: translate(-50%, -50%);
+ width: 100%;
+ height: 100%;
+ background-color: rgba(0, 0, 0, 0.7);
+ justify-content: center;
+ align-items: start;
+}
+
+.modal-content {
+ margin-top: 3%;
+ max-width: 55%;
+ max-height: 55%;
+}
+
+.modal-image {
+ width: 100%;
+ height: 100%;
+ object-fit: contain;
+}

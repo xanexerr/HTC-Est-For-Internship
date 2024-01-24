@@ -29,17 +29,21 @@
 
 
 
+
 <?php
 if (isset($_SESSION["user_id"])) {
 
 } else {
-    echo '<nav class="bg-warning d-flex justify-content-center  px-5">';
-    echo '<div class="">
-        <a href="https://forms.gle/MJ74K2imzm8DAvkp6" class="p-2 px-3 btn btn-warning mx-1" target="_blank">ลงทะเบียนใช้งานระบบ | ติดต่อทีมงาน</a>
+    echo '<nav class="bg-warning d-flex justify-content-center  px-5 ">';
+    echo '<div class="w-100">
+        <a href="https://forms.gle/MJ74K2imzm8DAvkp6" class="p-2 px-3 btn btn-warning mx-1 w-100" target="_blank">ลงทะเบียนใช้งานระบบ | ติดต่อทีมงาน</a>
         </div>';
     echo '</nav>';
 }
 ?>
-<div class="text-center p-3 bg-primary text-white"">
-        <a>&copy; วิทยาลัยเทคนิคหาดใหญ่</a>
+<footer class=" text-white bg-primary p-4   ">
+    <div class="container ">
+        <p class="text-center mb-0">&copy; วิทยาลัยเทคนิคหาดใหญ่</p>
     </div>
+
+</footer>

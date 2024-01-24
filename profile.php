@@ -20,7 +20,7 @@ include 'header.php';
     ?>
     <div class="flex-container vh-100">
         <div class="container">
-            <div class="my-3 bg-body shadow mx-auto col-6 ">
+            <div class="my-3 bg-body shadow mx-auto col-sm-10 col-lg-6 col-md-10 ">
                 <div class=" justify-content-center">
                     <p class='h4 py-2 px-auto bg-dark text-white mb-0 text-center '>
                         แก้ไขข้อมูลส่วนตัว </p>
