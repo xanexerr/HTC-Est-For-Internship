@@ -7,7 +7,7 @@
 <img src="https://user-images.githubusercontent.com/25181517/192158954-f88b5814-d510-4564-b285-dff7d6400dad.png" alt="Diagram of the system architecture" width="100"/>,
 <img src="https://user-images.githubusercontent.com/25181517/183898674-75a4a1b1-f960-4ea9-abcb-637170a00a75.png" alt="Diagram of the system architecture" width="100"/>,
 <img src="https://user-images.githubusercontent.com/25181517/183898054-b3d693d4-dafb-4808-a509-bab54cf5de34.png" alt="Diagram of the system architecture" width="100"/>,
-<img src="https://user-images.githubusercontent.com/25181517/183570228-6a040b9f-3ddf-47a2-a201-743121dac664.png" alt="Diagram of the system architecture" width="100"/>,
+<img src="https://github-production-user-asset-6210df.s3.amazonaws.com/76662862/283243401-dbbc299a-8356-45e4-9d2e-a6c21b4569cf.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20240822%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240822T171411Z&X-Amz-Expires=300&X-Amz-Signature=36ff0f927acd0aa74d0025ba74e2d2b3c2f8e64e7857f5b23275ca2bff6ef057&X-Amz-SignedHeaders=host&actor_id=124129619&key_id=0&repo_id=364793759" alt="Diagram of the system architecture" width="100"/>,
 <img src="https://user-images.githubusercontent.com/25181517/117447155-6a868a00-af3d-11eb-9cfe-245df15c9f3f.png" alt="Diagram of the system architecture" width="100"/>,
 <img src="https://user-images.githubusercontent.com/25181517/183898674-75a4a1b1-f960-4ea9-abcb-637170a00a75.png" alt="Diagram of the system architecture" width="100"/>,
 
