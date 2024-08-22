@@ -31,7 +31,7 @@ Before you begin, ensure you have the following software installed:
 2. **Clone the Repository**:
     - Clone this repository to your local machine using the command:
       ```bash
-      git clone https://github.com/your-username/your-repo-name.git
+      git clone https://github.com/xanexerr/HTC-Est-For-Internship.git
       ```
     - Alternatively, you can download the ZIP file from GitHub and extract it.
 
@@ -48,23 +48,19 @@ Before you begin, ensure you have the following software installed:
 5. **Set Up Database**:
     - Open a web browser and go to `http://localhost/phpmyadmin/`.
     - Create a new database (e.g., `your_database_name`).
-    - Import the database schema from the `db/schema.sql` file located in the project directory.
+    - Import the database schema from the `database/sample_db.sql` file located in the project directory.
 
 ## Configuration
 
 1. **Database Configuration**:
-    - Open the project’s configuration file (e.g., `config.php`) located in the root directory.
+    - Open the project’s configuration file (e.g., `connection.php`) located in the root directory.
     - Set your database credentials:
       ```php
-      $dbHost = 'localhost';
-      $dbName = 'your_database_name';
-      $dbUser = 'root'; // Default XAMPP MySQL user
-      $dbPass = '';     // Leave empty for default XAMPP setup
+        $server = "localhost";
+        $username = "root";
+        $password = "";
+        $database = "your_database";
       ```
-
-2. **Additional Configurations**:
-    - Make any additional configurations in the `config.php` file, such as base URLs or environment settings.
-
 ## Usage
 
 1. **Access the Project**:
